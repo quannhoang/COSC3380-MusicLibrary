@@ -24,11 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MusicLibrary.DataAccess\MusicLibrary.DataAccess.csproj" />
-    <ProjectReference Include="..\MusicLibrary.Models\MusicLibrary.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\Browse\Albums\" />
     <Folder Include="Pages\Browse\Playlists\" />
