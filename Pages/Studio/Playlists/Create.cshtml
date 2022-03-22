@@ -1,0 +1,35 @@
+﻿@page
+@model MusicLibrary.Pages.Studio.Playlists.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create New PLaylist</h1>
+
+<hr />
+<div class="row pb-2">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="playlist.UserName"/>
+            <div class="mb-3">
+                <label asp-for="playlist.PlaylistName" class="control-label"></label>
+                <input asp-for="playlist.PlaylistName" class="form-control" />
+                <span asp-validation-for="playlist.PlaylistName" class="text-danger"></span>
+                <span asp-validation-for="playlist.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

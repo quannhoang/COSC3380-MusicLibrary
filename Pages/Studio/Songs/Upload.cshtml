@@ -1,0 +1,43 @@
+﻿@page
+@model MusicLibrary.Pages.Studio.Songs.UploadModel
+
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<h1>Upload New Song</h1>
+
+<hr />
+<div class="row pb-2">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Song.Name" class="control-label"></label>
+                <input asp-for="Song.Name" class="form-control" />
+                <span asp-validation-for="Song.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Song.FileName" class="control-label"></label>
+                <input type="file" asp-for="inputFile" id="inputFile" name="inputFile" class="form-control" />
+                <span asp-validation-for="Song.FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Song.Genre" class="control-label"></label>
+                <input asp-for="Song.Genre" class="form-control" />
+                <span asp-validation-for="Song.Genre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
