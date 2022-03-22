@@ -26,14 +26,16 @@ namespace MusicLibrary.Pages.Studio.Songs
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }
         public SelectList Genres { get; set; }
+        //public List<string> Genres { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchGenre { get; set; }
         public async Task OnGet()
         {
-            IQueryable<string> genreQuery = from s in _db.Song.Where(s => s.Artist == loggedInUserName)
+            //IQueryable<string> genreQuery = from s in _db.Song.Where(s => s.Artist == loggedInUserName)
+            IQueryable<string> genreQuery = from s in _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE Artist = {0}", loggedInUserName)
                                             orderby s.Genre
                                             select s.Genre;
-            var songs = from s in _db.Song.Where(s => s.Artist == loggedInUserName) select s;
+            var songs = from s in _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE Artist = {0}", loggedInUserName) select s;
             if (!string.IsNullOrEmpty(searchString))
             {
                 songs = songs.Where(song => song.Name.Contains(searchString));

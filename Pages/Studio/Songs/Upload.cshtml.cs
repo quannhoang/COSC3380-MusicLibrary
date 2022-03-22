@@ -37,7 +37,7 @@ namespace MusicLibrary.Pages.Studio.Songs
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(IFormFile inputFile)
         {
-            Song.FileName = "DummyName";
+            Song.FileName = "DummyName"; 
             if (!ModelState.IsValid) // Form inputs are invalid (ex: file name too short)
             {
                 return Page();
