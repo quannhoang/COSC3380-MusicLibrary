@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MusicLibrary.DataAccess\MusicLibrary.DataAccess1.back.csproj" />
-    <ProjectReference Include="..\MusicLibrary.Models\MusicLibrary.Models1.back.csproj" />
+    <ProjectReference Include="..\MusicLibrary.DataAccess\MusicLibrary.DataAccess.csproj" />
+    <ProjectReference Include="..\MusicLibrary.Models\MusicLibrary.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
