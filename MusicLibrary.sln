@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary", "MusicLibrary.csproj", "{453FE8D6-6C3B-4AB9-B0A2-3DB888083A06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.DataAccess", "..\MusicLibrary.DataAccess\MusicLibrary.DataAccess.csproj", "{F59C3062-1ACC-4DFD-8A84-54778F7258FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.DataAccess1.back", "..\MusicLibrary.DataAccess\MusicLibrary.DataAccess1.back.csproj", "{F59C3062-1ACC-4DFD-8A84-54778F7258FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.Models", "..\MusicLibrary.Models\MusicLibrary.Models.csproj", "{E9B2FD55-D751-467C-9A63-1E0C5759E607}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.Models1.back", "..\MusicLibrary.Models\MusicLibrary.Models1.back.csproj", "{E9B2FD55-D751-467C-9A63-1E0C5759E607}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicLibrary.Utility", "..\MusicLibrary.Utility\MusicLibrary.Utility.csproj", "{BB78868D-D30B-49ED-B965-01C9A2AA5996}"
 EndProject
