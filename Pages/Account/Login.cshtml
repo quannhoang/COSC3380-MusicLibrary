@@ -1,0 +1,32 @@
+﻿@page
+@model MusicLibrary.Pages.Account.LoginModel
+@{
+}
+
+<h1>Login</h1>
+
+<div class="row pb-2">
+    <div class="col-md-4">
+        <form method="post">
+
+            <div class="mb-3">
+                <label class="control-label">User Name</label>
+                <input asp-for="LoginUserName" class="form-control" />
+           
+            </div>
+            <div class="form-group">
+                <label  class="control-label">Passwords</label>
+                <input type="password" asp-for="LoginPasswords" class="form-control" />
+
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Register">Register</a> here if you do not have an account.
+</div>

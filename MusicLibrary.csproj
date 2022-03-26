@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\" />
     <Folder Include="Pages\Browse\Albums\" />
     <Folder Include="Pages\Browse\Playlists\" />
     <Folder Include="Pages\Browse\Songs\" />

@@ -1,0 +1,49 @@
+﻿@page
+@model MusicLibrary.Pages.Account.RegisterModel
+@{
+}
+
+<h1>Account Registration</h1>
+
+<div class="row pb-2">
+    <div class="col-md-4">
+        <form method="post">
+
+            <div class="mb-3">
+                <label asp-for="newUser.UserName" class="control-label"></label>
+                <input asp-for="newUser.UserName" class="form-control" />
+                <span asp-validation-for="newUser.UserName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="newUser.Email" class="control-label"></label>
+                <input asp-for="newUser.Email" class="form-control" />
+                <span asp-validation-for="newUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newUser.Passwords" class="control-label"></label>
+                <input type= "password" asp-for="newUser.Passwords" class="form-control" />
+                <span asp-validation-for="newUser.Passwords" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  asp-for="newUser.PasswordsRetype" class="control-label"></label>
+                <input type= "password" asp-for="newUser.PasswordsRetype" class="form-control" />
+                <span asp-validation-for="newUser.PasswordsRetype" class="text-danger"></span>
+            </div>
+            <div name ="errorMessage" class="text-danger"> 
+                @{if(Model.errorMessage!=null)
+                {
+                    @Html.Raw(Model.errorMessage);
+                }
+                else @Html.Raw("");
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Login">Login</a> here if you already had an account.
+</div>
