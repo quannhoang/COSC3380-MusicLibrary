@@ -12,6 +12,13 @@ builder.Services.AddRazorPages();
 //builder.Services.AddDbContext<MusicLibraryContext>(options =>
 //   options.UseSqlServer(builder.Configuration.GetConnectionString("MusicLibraryContext")));
 
+builder.Services.AddAuthentication("MusicLibraryCookie").AddCookie("MusicLibraryCookie", options =>
+{
+    options.Cookie.Name = "MusicLibraryCookie";
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
+
 builder.Services.AddDbContext<MusicLibraryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDBContext")));
 
@@ -31,6 +38,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

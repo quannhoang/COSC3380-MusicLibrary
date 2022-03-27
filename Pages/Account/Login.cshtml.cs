@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MusicLibrary.DataAccess.Data;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace MusicLibrary.Pages.Account
 {
@@ -14,12 +16,12 @@ namespace MusicLibrary.Pages.Account
         }
 
         [BindProperty]
-        public string LoginUserName { get; set; }
+        public string LoginUserName { get; set; } = String.Empty;
 
         [BindProperty]
-        public string LoginPasswords { get; set; }
+        public string LoginPasswords { get; set; } = String.Empty;
 
-        public MusicLibrary.Models.User User { get; set; }
+        public MusicLibrary.Models.User UserFromDB { get; set; }
 
 
 
@@ -36,19 +38,26 @@ namespace MusicLibrary.Pages.Account
             
             if (UserExists(LoginUserName))
             {
-                User = _db.User.FirstOrDefault(u => u.UserName == LoginUserName);
+                UserFromDB = _db.User.First(u => u.UserName == LoginUserName);
 
                 // Hash passwords
                 byte[] salt = new byte[128 / 8];
                 string HashedPass = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                                                             password: LoginPasswords,
-                                                            salt: Convert.FromBase64String(User.Salt),
+                                                            salt: Convert.FromBase64String(UserFromDB.Salt),
                                                             prf: KeyDerivationPrf.HMACSHA256,
                                                             iterationCount: 100000,
                                                             numBytesRequested: 256 / 8));
-                if (HashedPass == User.Passwords)
+                if (HashedPass == UserFromDB.Passwords) // If UserExists and Passwords match, begin authentication
                 {
-                    return RedirectToPage("/Index");
+                    var claims = new List<Claim> {
+                        new Claim(ClaimTypes.Name, UserFromDB.UserName),
+                        new Claim(ClaimTypes.Email, UserFromDB.Email)
+                    };
+                    var identity = new ClaimsIdentity(claims, "MusicLibraryCookie");
+                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync("MusicLibraryCookie", claimsPrincipal);
+                    return RedirectToPage("/Index"); // Authentication finished
                 }
                 else
                 {

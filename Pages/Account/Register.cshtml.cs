@@ -24,8 +24,8 @@ namespace MusicLibrary.Pages.Account
         }
         public async Task<IActionResult> OnPostAsync()
         {
-
-            if (!ModelState.IsValid)
+            
+            if (!ModelState.IsValid) // Check if all forms are filled correctly
             {
                 return Page();
             }
@@ -52,9 +52,7 @@ namespace MusicLibrary.Pages.Account
                                                             prf: KeyDerivationPrf.HMACSHA256,
                                                             iterationCount: 100000,
                                                             numBytesRequested: 256 / 8));
-            Console.WriteLine($"Salt: {Convert.ToBase64String(salt)}");
-
-            Console.WriteLine(HashedPass);
+            // Add new user to DB
             newUser.Passwords = HashedPass;
             newUser.Salt = Convert.ToBase64String(salt);
             _db.User.Add(newUser);
