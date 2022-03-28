@@ -1,0 +1,46 @@
+﻿@page
+@model MusicLibrary.Pages.Browse.Albums.IndexModel
+@{
+}
+<h1> This is where all the albums are listed</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Album Name
+            </th>
+            <th>
+               Artist
+            </th>
+            <th>
+                Create Date
+            </th>
+            <th>
+                Number of Songs
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>
+                Quan's album
+            </td>
+            <td>
+                Quan
+            </td>
+            <td>
+                01/01/2022
+            </td>
+            <td>
+                2
+            </td>
+            <td>
+                <a type="button", value="Play"  asp-page="./Play">Play</a>
+                <a  type="button", value="View" asp-page="./Details"/>View</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
