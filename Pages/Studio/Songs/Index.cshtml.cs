@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
+
 using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Studio.Songs
@@ -22,7 +23,7 @@ namespace MusicLibrary.Pages.Studio.Songs
             _db = context;
         }
 
-        public string loggedInUserName { get; set; } = "DummyUserName";
+        public string loggedInUserName { get; set; } = String.Empty;   
         public IList<Song> Songs { get;set; }
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }
@@ -32,6 +33,8 @@ namespace MusicLibrary.Pages.Studio.Songs
         public string searchGenre { get; set; }
         public async Task OnGet()
         {
+            loggedInUserName = HttpContext.User.Identity.Name;
+            Console.WriteLine(loggedInUserName);
             //IQueryable<string> genreQuery = from s in _db.Song.Where(s => s.Artist == loggedInUserName)
             IQueryable<string> genreQuery = from s in _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE Artist = {0}", loggedInUserName)
                                             orderby s.Genre
