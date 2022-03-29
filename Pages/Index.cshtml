@@ -5,6 +5,6 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome, this is my first Music Library</h1>
+    <h1 class="display-4">Welcome @{if (Model.loggedInUserName != null) {@Html.Raw(Model.loggedInUserName);}} this is my first Music Library</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

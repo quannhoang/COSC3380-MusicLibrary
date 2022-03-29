@@ -24,7 +24,6 @@ namespace MusicLibrary.Pages.Account
         public MusicLibrary.Models.User UserFromDB { get; set; }
 
 
-
         public void OnGet()
         {
         }

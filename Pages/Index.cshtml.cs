@@ -7,6 +7,8 @@ namespace MusicLibrary.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
+        public string loggedInUserName { get; set; } = String.Empty;
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -14,7 +16,7 @@ namespace MusicLibrary.Pages
 
         public void OnGet()
         {
-
+            loggedInUserName = HttpContext.User.Identity.Name;  
         }
     }
 }
