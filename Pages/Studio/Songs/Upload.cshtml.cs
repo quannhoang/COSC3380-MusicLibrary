@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,6 +27,9 @@ namespace MusicLibrary.Pages.Studio.Songs
         [BindProperty]
         public Song Song { get; set; }
 
+
+        public string loggedInUserName { get; set; } = string.Empty;
+
         public IActionResult OnGet()
         {
 
@@ -37,7 +41,7 @@ namespace MusicLibrary.Pages.Studio.Songs
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync(IFormFile inputFile)
         {
-            Song.FileName = "DummyName"; 
+            loggedInUserName = HttpContext.User.Identity.Name;
             if (!ModelState.IsValid) // Form inputs are invalid (ex: file name too short)
             {
                 return Page();
@@ -49,6 +53,7 @@ namespace MusicLibrary.Pages.Studio.Songs
             bool uploadSuccess = await _blobService.UploadFile(fileName.ToString(), inputFile); //Add SongID to filename ensure uniqueness
             if (uploadSuccess)
             {
+                Song.Artist = loggedInUserName;
                 Song.Length = Song.Name.Length;
                 Song.FileName = fileName;
                 _db.Song.Add(Song);
