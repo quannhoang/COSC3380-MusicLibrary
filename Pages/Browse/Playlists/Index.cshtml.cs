@@ -1,11 +1,11 @@
-﻿#nullable disable
+#nullable disable
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
 
-namespace MusicLibrary.Pages.Studio.Playlists
+namespace MusicLibrary.Pages.Browse.Playlists
 {
     public class IndexModel : PageModel
     {
@@ -15,8 +15,6 @@ namespace MusicLibrary.Pages.Studio.Playlists
         {
             _db = context;
         }
-
-        public string loggedInUserName { get; set; } = "DummyUserName";
         public IList<Playlist> Playlists { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -24,7 +22,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public async Task OnGet()
         {
-            var playlists = from pl in _db.Playlist.Where(pl => pl.UserName == loggedInUserName) select pl;
+            var playlists = from pl in _db.Playlist select pl;
             if (!string.IsNullOrEmpty(searchString))
             {
                 playlists = playlists.Where(pl => pl.PlaylistName.Contains(searchString));
@@ -32,6 +30,5 @@ namespace MusicLibrary.Pages.Studio.Playlists
             Playlists = await playlists.ToListAsync();
 
         }
-
     }
 }

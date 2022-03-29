@@ -24,9 +24,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Browse\Playlists\" />
-    <Folder Include="Pages\Browse\Songs\" />
     <Folder Include="Pages\Studio\Albums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Browse\Albums\Details.cshtml" />
+    <None Include="Pages\Browse\Albums\Index.cshtml" />
+    <None Include="Pages\Browse\Albums\Play.cshtml" />
+    <None Include="Pages\Studio\Playlists\Create.cshtml" />
+    <None Include="Pages\Studio\Playlists\Delete.cshtml" />
+    <None Include="Pages\Studio\Playlists\Edit.cshtml" />
+    <None Include="Pages\Studio\Playlists\Index.cshtml" />
+    <None Include="Pages\Studio\Playlists\Play.cshtml" />
+    <None Include="Pages\Studio\Songs\Delete.cshtml" />
+    <None Include="Pages\Studio\Songs\Edit.cshtml" />
+    <None Include="Pages\Studio\Songs\Index.cshtml" />
+    <None Include="Pages\Studio\Songs\PlaySong.cshtml" />
+    <None Include="Pages\Studio\Songs\Upload.cshtml" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,11 @@
 ﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
 
-namespace MusicLibrary.Pages.Studio.Songs
+namespace MusicLibrary.Pages.Browse.Songs
 {
     public class PlaySongModel : PageModel
     {
@@ -36,7 +32,7 @@ namespace MusicLibrary.Pages.Studio.Songs
             }
 
             Song = await _db.Song.FirstOrDefaultAsync(s => s.SongID == id);
-            
+
             if (Song == null)
             {
                 return NotFound();

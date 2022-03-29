@@ -31,8 +31,7 @@ namespace MusicLibrary.Pages.Studio.Songs
                 return NotFound();
             }
 
-            //Song = await _db.Song.FirstOrDefaultAsync(m => m.SongID == id);
-            Song = _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE SongID = {0}", id).FirstOrDefault();
+            Song = await _db.Song.FirstOrDefaultAsync(m => m.SongID == id);
 
             if (Song == null)
             {

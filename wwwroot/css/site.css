@@ -14,5 +14,52 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #FBAB7E;
+    background-image: linear-gradient(45deg, #FBAB7E 0%, #f7686a 100%);
+}
+
+header {
+    background: #1C1715;
+}
+
+.navbar-brand{
+    font-weight:500;
+}
+
+.input-bg, .input-bg::placeholder {
+    background: #1C1715;
+    color: #FFA869;
+    border: 0;
+    border-radius: .25rem;
+}
+
+.btn-primary svg{
+    transition-duration: 250ms;
+}
+
+.btn-primary, .btn-primary svg {
+    background: #1C1715;
+    border: 0;
+    color: #FFA869;
+    font-weight: 600;
+}
+
+    .btn-primary:hover, .btn-primary:hover svg{
+        background: #494543;
+        color: #FFA869;
+    }
+
+.table {
+    background: #322E2C;
+    color: #FFA869;
+    border: 0;
+}
+
+svg {
+    fill: #FFA869;
+}
+
+.logo-svg {
+    filter: invert(66%) sepia(82%) saturate(380%) hue-rotate(328deg) brightness(100%) contrast(101%);
 }
