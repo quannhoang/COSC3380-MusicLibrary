@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">MusicLibrary</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,18 +20,21 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">Register</a>
                         </li>
-                        <li class="nav-item">
                             <div class="dropdown">
-                              <a class="nav-link text-dark" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <a class="nav-link" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Browse
                               </a>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" asp-page="/Studio/Songs/Index">Songs</a>
+                                <a class="dropdown-item" asp-page="/Browse/Songs/Index">Songs</a>
                                 <a class="dropdown-item" asp-page="/Browse/Playlists/Index">Playlists</a>
                                 <a class="dropdown-item" asp-page="/Browse/Albums/Index">Albums</a>
                               </div>
@@ -39,7 +42,7 @@
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
-                              <a class="nav-link text-dark" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <a class="nav-link" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Studio
                               </a>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -50,10 +53,10 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Report/Index">Report</a>
+                            <a class="nav-link text" asp-area="" asp-page="/Report/Index">Report</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout">Logout</a>
+                            <a class="nav-link text" asp-area="" asp-page="/Account/Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -61,12 +64,12 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="container-fluid p-0 d-flex flex-column gap-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container">
             &copy; 2022 - MusicLibrary - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
