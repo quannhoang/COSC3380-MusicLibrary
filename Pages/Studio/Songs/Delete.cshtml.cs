@@ -32,8 +32,7 @@ namespace MusicLibrary.Pages.Studio.Songs
                 return NotFound();
             }
 
-            //Song = await _db.Song.FirstOrDefaultAsync(m => m.SongID == id);
-            Song = _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE SongID = {0}", id).FirstOrDefault();
+            Song = await _db.Song.FirstOrDefaultAsync(m => m.SongID == id);
 
             if (Song == null)
             {
@@ -57,11 +56,11 @@ namespace MusicLibrary.Pages.Studio.Songs
                 bool deleteSuccess = await _blobService.DeleteFile(Song.FileName);
                 if (deleteSuccess)
                 {
-                    // Only delete if file has been deleted in Azure blob storage
+                    //TODO: Delete song's records in AlbumSongs and PLaylistSongs before delete Song
                     _db.Song.Remove(Song);
                     await _db.SaveChangesAsync();
                 }
-                else { } //TODO: If delete failed on Azure blob storage, inform user with an error message
+                else { } //TODO: If delete failed on Azlure blob storage, inform user with an error message
             }
 
             return RedirectToPage("./Index");
