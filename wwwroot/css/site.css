@@ -1,16 +1,16 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -23,9 +23,17 @@ header {
     background: #1C1715;
 }
 
-.navbar-brand{
-    font-weight:500;
+.navbar-brand {
+    font-weight: 500;
 }
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #D8D8D8;
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: white;
+    }
 
 .input-bg, .input-bg::placeholder {
     background: #1C1715;
@@ -34,7 +42,7 @@ header {
     border-radius: .25rem;
 }
 
-.btn-primary svg{
+.btn-primary svg {
     transition-duration: 250ms;
 }
 
@@ -45,7 +53,7 @@ header {
     font-weight: 600;
 }
 
-    .btn-primary:hover, .btn-primary:hover svg{
+    .btn-primary:hover, .btn-primary:hover svg {
         background: #494543;
         color: #FFA869;
     }
@@ -60,6 +68,79 @@ svg {
     fill: #FFA869;
 }
 
+.invert-icon {
+    background: white;
+    border-radius: 50%;
+    transition: 300ms transform;
+}
+
+    .invert-icon:hover {
+        transform: translateX(-4px);
+    }
+    .invert-icon:active {
+        transform: translateX(1px);
+    }
+
 .logo-svg {
     filter: invert(66%) sepia(82%) saturate(380%) hue-rotate(328deg) brightness(100%) contrast(101%);
+}
+
+.navbar-dark .navbar-nav .nav-link.register {
+    background: white;
+    border: 2px solid black;
+    border-radius: 1.5rem;
+    color: black;
+    font-weight: 500;
+}
+
+    .navbar-dark .navbar-nav .nav-link.register:hover {
+        background: transparent;
+        border-color: white;
+        color: white;
+    }
+
+.navbar-dark .navbar-nav .nav-link.login {
+    border: 2px solid white;
+    border-radius: 1.5rem;
+    color: white;
+    font-weight: 500;
+}
+
+    .navbar-dark .navbar-nav .nav-link.login:hover {
+        background: white;
+        color: black;
+    }
+
+.styled-form {
+    background: #1C1715;
+    border-radius: .5rem;
+}
+
+.btn-primary.upload {
+    background-image: linear-gradient(45deg, #FBAB7E 0%, #f7686a 100%);
+    color: #1C1715;
+    transition: 250ms;
+}
+
+    .btn-primary.upload:hover {
+        filter: brightness(0.95);
+        transform: translateY(-2px);
+    }
+
+    .btn-primary.upload:active {
+        transform: translateY(2px);
+    }
+
+.text-danger {
+    font-weight: 500;
+}
+
+.footer {
+    background: linear-gradient(to top, rgb(0,0,0,.8), rgb(0,0,0,0));
+}
+
+@media (max-width: 768px) {
+    .navbar-dark .navbar-nav .nav-link.login, .navbar-dark .navbar-nav .nav-link.register {
+        font-size: .75rem;
+    }
 }

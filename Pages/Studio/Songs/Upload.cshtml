@@ -7,37 +7,40 @@
 
 <h1>Upload New Song</h1>
 
-<hr />
-<div class="row pb-2">
+<div class="styled-form row py-3">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="mb-3">
-                <label asp-for="Song.Name" class="control-label"></label>
-                <input asp-for="Song.Name" class="form-control" />
+            <div class="form-group">
+                <label asp-for="Song.Name" class="control-label text-white"></label>
+                <input asp-for="Song.Name" class="form-control" placeholder="random song name..." />
                 <span asp-validation-for="Song.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Song.FileName" class="control-label"></label>
+                <label asp-for="Song.FileName" class="control-label text-white"></label>
                 <input type="file" asp-for="inputFile" id="inputFile" name="inputFile" class="form-control" />
                 <span asp-validation-for="Song.FileName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Song.Genre" class="control-label"></label>
-                <input asp-for="Song.Genre" class="form-control" />
+                <label asp-for="Song.Genre" class="control-label text-white"></label>
+                <input asp-for="Song.Genre" class="form-control" placeholder="Pop, Country, Rock, Retro..." />
                 <span asp-validation-for="Song.Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Upload" class="btn btn-primary" />
+                <input type="submit" value="Upload" class="btn btn-primary upload" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">
+        <img class="invert-icon" src="~/images/icons8-back-arrow-64.png" width="40px" height="40px"/>
+    </a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

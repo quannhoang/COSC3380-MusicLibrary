@@ -11,12 +11,12 @@
 
             <div class="mb-3">
                 <label asp-for="newUser.UserName" class="control-label"></label>
-                <input asp-for="newUser.UserName" class="form-control" />
+                <input type="text" asp-for="newUser.UserName" class="form-control" />
                 <span asp-validation-for="newUser.UserName" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="newUser.Email" class="control-label"></label>
-                <input asp-for="newUser.Email" class="form-control" />
+                <input type="email" asp-for="newUser.Email" class="form-control"/>
                 <span asp-validation-for="newUser.Email" class="text-danger"></span>
             </div>
             <div class="form-group">

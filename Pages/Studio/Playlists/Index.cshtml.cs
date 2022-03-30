@@ -16,7 +16,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
             _db = context;
         }
 
-        public string loggedInUserName { get; set; } = "DummyUserName";
+        public string loggedInUserName { get; set; } = String.Empty;
         public IList<Playlist> Playlists { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -24,6 +24,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public async Task OnGet()
         {
+            loggedInUserName = HttpContext.User.Identity.Name;
             var playlists = from pl in _db.Playlist.Where(pl => pl.UserName == loggedInUserName) select pl;
             if (!string.IsNullOrEmpty(searchString))
             {
