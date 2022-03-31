@@ -24,10 +24,11 @@ namespace MusicLibrary.Pages.Studio.Playlists
         [BindProperty(SupportsGet = true)]
         public Playlist playlist { get; set; }
 
-        public string loggedInUserName = "DummyUserName";
+        public string loggedInUserName { get; set; } = string.Empty;
 
         public IActionResult OnGet()
         {
+            loggedInUserName = HttpContext.User.Identity.Name;
             playlist.UserName = loggedInUserName;
             return Page();
         }
@@ -35,17 +36,9 @@ namespace MusicLibrary.Pages.Studio.Playlists
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-       
+            
             if (!ModelState.IsValid) // Form inputs are invalid (example: name too short)
             {
-                /*if (playlist.UserName != null) // Hndle strange error that UserName is considered null while already assigned value
-                {
-                    _db.Playlist.Add(playlist);
-                    await _db.SaveChangesAsync();
-                    // FIXME: Add Else print some error 
-
-                    return RedirectToPage("./Index");
-                }*/
                 return Page();
             }
             _db.Playlist.Add(playlist);

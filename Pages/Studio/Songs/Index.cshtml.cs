@@ -34,7 +34,6 @@ namespace MusicLibrary.Pages.Studio.Songs
         public async Task OnGet()
         {
             loggedInUserName = HttpContext.User.Identity.Name;
-            Console.WriteLine(loggedInUserName);
             //IQueryable<string> genreQuery = from s in _db.Song.Where(s => s.Artist == loggedInUserName)
             IQueryable<string> genreQuery = from s in _db.Song.FromSqlRaw("SELECT * from dbo.Song WHERE Artist = {0}", loggedInUserName)
                                             orderby s.Genre

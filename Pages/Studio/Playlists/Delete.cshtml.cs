@@ -15,15 +15,13 @@ namespace MusicLibrary.Pages.Studio.Playlists
     {
         private readonly MusicLibraryContext _db;
 
-        private readonly BlobService _blobService;
-        public DeleteModel(MusicLibraryContext context, BlobService blobService)
+        public DeleteModel(MusicLibraryContext context)
         {
             _db = context;
-            _blobService = blobService;
         }
 
         [BindProperty]
-        public Song Song { get; set; }
+        public Playlist playlist { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,9 +30,9 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 return NotFound();
             }
 
-            Song = await _db.Song.FirstOrDefaultAsync(m => m.SongID == id);
+            playlist = await _db.Playlist.FirstOrDefaultAsync(p => p.PlaylistID == id);
 
-            if (Song == null)
+            if (playlist == null)
             {
                 return NotFound();
             }
@@ -49,18 +47,12 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 return NotFound();
             }
 
-            Song = await _db.Song.FindAsync(id);
+            playlist = await _db.Playlist.FindAsync(id);
 
-            if (Song != null)
+            if (playlist != null)
             {
-                bool deleteSuccess = await _blobService.DeleteFile(Song.FileName);
-                if (deleteSuccess)
-                {
-                    //TODO: Delete song's records in AlbumSongs and PLaylistSongs before delete Song
-                    _db.Song.Remove(Song);
-                    await _db.SaveChangesAsync();
-                }
-                else { } //TODO: If delete failed on Azlure blob storage, inform user with an error message
+                _db.Playlist.Remove(playlist);
+                await _db.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");

@@ -25,6 +25,9 @@
                 @Html.DisplayNameFor(model => model.Playlists[0].PlaylistName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Playlists[0].UserName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Playlists[0].SongCount)
             </th>
             <th>
@@ -38,6 +41,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PlaylistName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SongCount)

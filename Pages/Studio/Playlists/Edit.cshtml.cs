@@ -24,19 +24,43 @@ namespace MusicLibrary.Pages.Studio.Playlists
         [BindProperty]
         public Playlist playlist { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IList<Song> PlaylistSongs { get; set; }
+
+        public int playlistID { get; set; }
+
+        public PlaylistSongs removePlaylistSongs { get; set; }
+
+
+        public async Task<IActionResult> OnGetAsync(int? id, int? SongID)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            playlistID = (int)id;
             playlist = await _db.Playlist.FirstOrDefaultAsync(pl => pl.PlaylistID == id);
 
             if (playlist == null)
             {
                 return NotFound();
             }
+            var playlistSongs = from s in _db.Song.FromSqlRaw("SELECT S.* from dbo.Song S, dbo.Playlist PL, dbo.PlaylistSongs PLS"
+                                                            + " WHERE PL.PlaylistID = PLS.PlaylistID"
+                                                            + " AND S.SongID = PLS.SongID"
+                                                            + " AND PL.PlayListID = {0}", id)
+                                select s;
+
+            PlaylistSongs = await playlistSongs.Distinct().ToListAsync();
+
+            if (SongID != null)
+            {
+                //removePlaylistSongs = _db.PlaylistSongs.FirstOrDefault(pls => pls.SongID == SongID && pls.PlaylistID == id);
+                //_db.PlaylistSongs.Remove(removePlaylistSongs);
+                //await _db.SaveChangesAsync();
+                _db.Database.ExecuteSqlRaw("DELETE FROM PlaylistSongs WHERE SongID = {0} AND PlaylistID = {1}", SongID, id);
+                return Redirect("./Edit?id=" + id.ToString());
+            }
+
             return Page();
         }
 
