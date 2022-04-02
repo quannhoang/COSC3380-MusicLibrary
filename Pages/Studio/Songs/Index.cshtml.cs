@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
+
 using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Studio.Songs
@@ -22,7 +23,7 @@ namespace MusicLibrary.Pages.Studio.Songs
             _db = context;
         }
 
-        public string loggedInUserName { get; set; } = String.Empty;
+        public string loggedInUserName { get; set; } = String.Empty;   
         public IList<Song> Songs { get;set; }
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }

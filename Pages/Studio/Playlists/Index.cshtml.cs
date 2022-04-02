@@ -17,7 +17,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
         }
 
         public string loggedInUserName { get; set; } = String.Empty;
-        public IList<Playlist> Playlists { get; set; }
+        public IList<Playlist> Playlists { get;set; }
 
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }

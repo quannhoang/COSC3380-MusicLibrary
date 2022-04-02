@@ -36,8 +36,117 @@
     </div>
 </div>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaylistSongs[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaylistSongs[0].UploadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaylistSongs[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaylistSongs[0].Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaylistSongs[0].Length)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PlaylistSongs) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-removeSongID="@item.SongID" asp-route-id="@Model.currentPlaylistID">Remove</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<button onclick="showAllSongs()"  class="btn btn-primary" >Add Songs to Playlist</button>
+
+<div id="allSongsDiv" style= "display:none">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSongs[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSongs[0].UploadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSongs[0].Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSongs[0].Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllSongs[0].Length)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.AllSongs) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-addSongID="@item.SongID" asp-route-id="@Model.currentPlaylistID">Add</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+<script>
+function showAllSongs() {
+  var x = document.getElementById("allSongsDiv");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Back to Playlists</a>
 </div>
 
 @section Scripts {

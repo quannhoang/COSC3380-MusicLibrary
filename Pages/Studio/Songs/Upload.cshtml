@@ -11,15 +11,25 @@
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data" class="d-flex flex-column gap-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <input asp-for="Song.Length" class="form-control" type="hidden" value="empty"/>
+            <div class="mb-3">
                 <label asp-for="Song.Name" class="control-label text-white"></label>
-                <input asp-for="Song.Name" class="form-control" placeholder="random song name..." />
+                <input asp-for="Song.Name" class="form-control" placeholder="random song name..."/>
                 <span asp-validation-for="Song.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Song.FileName" class="control-label text-white"></label>
-                <input type="file" asp-for="inputFile" id="inputFile" name="inputFile" class="form-control" />
+                <input type="file" asp-for="inputFile" accept=".m4a, .mp3, .flac, .mp4, .wav, .wma, .aac" id="inputFile" name="inputFile" class="form-control" />
                 <span asp-validation-for="Song.FileName" class="text-danger"></span>
+                <div class="text-danger">
+                    @{
+                        if (Model.fileNotAllowedMessage!=null)
+                        {
+                            @Html.Raw(Model.fileNotAllowedMessage);
+                        }
+                        else @Html.Raw("");
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Song.Genre" class="control-label text-white"></label>

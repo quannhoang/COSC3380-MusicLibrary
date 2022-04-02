@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,17 +19,23 @@ namespace MusicLibrary.Pages.Studio.Songs
 
         private readonly BlobService _blobService;
 
-        public UploadModel(MusicLibraryContext context, BlobService blobService)
+        private readonly IHostEnvironment _hostingEnvironment;
+
+        public UploadModel(MusicLibraryContext context, BlobService blobService, IHostEnvironment hostingEnvironment)
         {
             _db = context;
             _blobService = blobService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [BindProperty]
         public Song Song { get; set; }
 
-
         public string loggedInUserName { get; set; } = string.Empty;
+
+        public List<string> allowedFiles { get; set; } = new List<string> {".m4a", ".mp3", ".flac", ".mp4", ".wav", ".wma", ".aac" };
+
+        public string fileNotAllowedMessage { get; set; } = string.Empty;
 
         public IActionResult OnGet()
         {
@@ -47,14 +54,36 @@ namespace MusicLibrary.Pages.Studio.Songs
                 return Page();
             }
             if (inputFile == null || inputFile.Length < 1) return Page(); // Input file is empty or null
+            // Only allow files ".m4a, .mp3, .flac, .mp4, .wav, .wma, .aac"
+            if (!allowedFiles.Contains(Path.GetExtension(inputFile.FileName)))
+            {
+                fileNotAllowedMessage = "Only files M4A, MP3, MP4, FLAC, WAV, WMA and AAC are allowed";
+                return Page();
+            }
 
-            var fileName = Guid.NewGuid() + Path.GetExtension(inputFile.FileName); // Generate new file name
+            // Generate new file name
+            var fileName = Guid.NewGuid() + Path.GetExtension(inputFile.FileName); 
 
-            bool uploadSuccess = await _blobService.UploadFile(fileName.ToString(), inputFile); //Add SongID to filename ensure uniqueness
+            // Use Taglib library to calculate audio duration
+            var serverfilePath = _hostingEnvironment.ContentRootPath + "\\wwwroot\\" + fileName;
+            using (Stream fileStream = new FileStream(serverfilePath, FileMode.Create))
+            {
+                await inputFile.CopyToAsync(fileStream);
+            }
+            // Get duration
+            var tfile = TagLib.File.Create(serverfilePath);
+            var duration = string.Format("{0}:{1}:{2}", 
+                tfile.Properties.Duration.Hours.ToString("D2"), 
+                tfile.Properties.Duration.Minutes.ToString("D2"), 
+                tfile.Properties.Duration.Seconds.ToString("D2"));
+            // Delete temp file from server
+            System.IO.File.Delete(serverfilePath);
+
+            bool uploadSuccess = await _blobService.UploadFile(fileName.ToString(), inputFile); 
             if (uploadSuccess)
             {
                 Song.Artist = loggedInUserName;
-                Song.Length = Song.Name.Length;
+                Song.Length = duration;
                 Song.FileName = fileName;
                 _db.Song.Add(Song);
                 await _db.SaveChangesAsync();

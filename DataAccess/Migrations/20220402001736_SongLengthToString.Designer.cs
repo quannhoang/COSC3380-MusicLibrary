@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicLibrary.DataAccess.Data;
 
@@ -11,9 +12,10 @@ using MusicLibrary.DataAccess.Data;
 namespace MusicLibrary.DataAccess.Migrations
 {
     [DbContext(typeof(MusicLibraryContext))]
-    partial class MusicLibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20220402001736_SongLengthToString")]
+    partial class SongLengthToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -48,7 +48,6 @@ namespace MusicLibrary.Pages.Studio.Songs
             {
                 return Page();
             }
-            Song.Length = Song.Name.Length;
             _db.Attach(Song).State = EntityState.Modified;
 
             try
