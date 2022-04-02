@@ -30,7 +30,8 @@ namespace MusicLibrary.Models
         public string Artist { get; set; } = "DummyUserName" ;
 
         [Required]
-        public int Length { get; set; }
+        [StringLength(30, MinimumLength = 3)]
+        public string Length { get; set; } = String.Empty;
 
         [Required]
         public int ViewCount { get; set; } = 0;

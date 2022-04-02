@@ -28,8 +28,8 @@
 
         </dd>
         <dt>
-            <a asp-page="./Play" asp-route-prev="1" asp-route-playlistID="@Model.Playlist.PlaylistID">Previous</a>
-            <a asp-page="./Play" asp-route-next="1" asp-route-playlistID="@Model.Playlist.PlaylistID">Next</a>
+            <a asp-page="./Play" asp-route-songIndex="@(Model.currentSongIndex-1)" asp-route-playlistID="@Model.Playlist.PlaylistID">Previous</a>
+            <a asp-page="./Play" asp-route-songIndex="@(Model.currentSongIndex+1)" asp-route-playlistID="@Model.Playlist.PlaylistID">Next</a>
         </dt>
         <dd>
 

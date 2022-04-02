@@ -23,27 +23,26 @@ namespace MusicLibrary.Pages.Studio.Playlists
             _blobService = blobService;
         }
 
-        public Song CurrentSong { get; set; }
-
         public IList<Song> PlaylistSongs { get; set; }
 
-        public int currentPlaylistIndex { get; set; }
+        public int currentSongIndex { get; set; }
 
         public Playlist Playlist { get; set; }
 
-        [BindProperty]
+        public Song CurrentSong { get; set; }
+
         public string SongUri { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? playlistID, int? songID, int? prev, int? next)
+        public async Task<IActionResult> OnGetAsync(int? playlistID, int? songID, int? songIndex)
         {
-            if (playlistID == null)
+            if (playlistID == null) // If no playlisID provided, return not found page
             {
                 return NotFound();
             }
 
             Playlist = await _db.Playlist.FirstOrDefaultAsync(pl => pl.PlaylistID == playlistID); // Query the playlist from DB
 
-            if (Playlist == null) // If query return nothing, return not found page
+            if (Playlist == null) // If query returns nothing, return not found page
             {
                 return NotFound();
             }
@@ -56,11 +55,9 @@ namespace MusicLibrary.Pages.Studio.Playlists
                                 select s;
 
             PlaylistSongs = await playlistSongs.Distinct().ToListAsync();
-            currentPlaylistIndex = findSongIndex(PlaylistSongs, CurrentSong);
             // If Page is loaded the first time or no songID is provided, play the first song in the playlist
-            if ((songID == null)&&(next==null)&&(prev==null))
+            if ((songID == null)&&(songIndex == null))
             {
-                Console.WriteLine(currentPlaylistIndex);
                 CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == PlaylistSongs[0].SongID);
 
                 if (CurrentSong == null)
@@ -68,58 +65,44 @@ namespace MusicLibrary.Pages.Studio.Playlists
                     return NotFound();
                 }
                 SongUri = await _blobService.GetFile(CurrentSong.FileName);
-                currentPlaylistIndex = findSongIndex(PlaylistSongs, CurrentSong);
-                Console.WriteLine(currentPlaylistIndex);
             }
 
             // If user choose a song, play that song
             if (songID != null)
             {
-                CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == songID);
-
-                if (CurrentSong == null)
-                {
-                    return NotFound();
-                }
-                SongUri = await _blobService.GetFile(CurrentSong.FileName);
-                currentPlaylistIndex = findSongIndex(PlaylistSongs, CurrentSong);
-                Console.WriteLine(currentPlaylistIndex);
+                currentSongIndex = findSongIndex(PlaylistSongs, songID);
+                return Redirect(String.Format("./Play?songIndex={0}&playlistID={1}", currentSongIndex, playlistID));
             }
 
-            if (next != null)
+            // If user choose Next, Or Previous, play based on songIndex
+            if (songIndex != null)
             {
-                currentPlaylistIndex++;
-                Console.WriteLine(currentPlaylistIndex);
-                if (currentPlaylistIndex >= PlaylistSongs.Count())
-                    currentPlaylistIndex = 0;
-                CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == PlaylistSongs[currentPlaylistIndex].SongID);
-
-                if (CurrentSong == null)
-                {
-                    return NotFound();
-                }
-                SongUri = await _blobService.GetFile(CurrentSong.FileName);
-            }
-
-            if (prev != null)
-            {
-                currentPlaylistIndex--;
-                Console.WriteLine(currentPlaylistIndex);
-                if (currentPlaylistIndex < 0)
-                    currentPlaylistIndex = PlaylistSongs.Count()-1;
-                CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == PlaylistSongs[currentPlaylistIndex].SongID);
-
-                if (CurrentSong == null)
-                {
-                    return NotFound();
-                }
-                SongUri = await _blobService.GetFile(CurrentSong.FileName);
+                currentSongIndex = (int)songIndex;
+                await loadSong(PlaylistSongs, songIndex);
             }
 
             return Page();
         }
 
-        /*private int findSongIndex(IList<Song> PlayListSongs, int? inputSongID)
+        // Function to load and play song based on songIndex
+        private async Task<IActionResult> loadSong(IList<Song> PLaylistSongs, int? inputSongIndex)
+        {
+            int localSongIndex = (int)inputSongIndex;
+            if (localSongIndex < 0) localSongIndex = PLaylistSongs.Count() -1;
+            if (localSongIndex >= PLaylistSongs.Count) localSongIndex = 0;
+            currentSongIndex = localSongIndex;
+            CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == PLaylistSongs[localSongIndex].SongID);
+
+            if (CurrentSong == null)
+            {
+                return NotFound();
+            }
+            SongUri = await _blobService.GetFile(CurrentSong.FileName);
+            return Page();
+        }
+
+        // Function to retrieve song's index in playlist using SongID
+        private int findSongIndex(IList<Song> PlayListSongs, int? inputSongID)
         {
             int index = 0;
             foreach (var song in PlayListSongs)
@@ -131,21 +114,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 index++;
             }
             return -1;
-        }*/
-
-        private int findSongIndex(IList<Song> PlayListSongs, Song? inputSong)
-        {
-            int index = 0;
-            if (inputSong == null) return 0;
-            foreach (var song in PlayListSongs)
-            {
-                if (song.SongID == inputSong.SongID)
-                {
-                    return index;
-                }
-                index++;
-            }
-            return -1;
         }
+
     }
 }
