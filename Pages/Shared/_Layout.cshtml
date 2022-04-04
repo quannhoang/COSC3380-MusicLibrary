@@ -42,8 +42,13 @@
                         </div>
                         <a class="nav-link nav-item" asp-area="" asp-page="/Report/Index">Report</a>
                         <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
-                            <a class="nav-link nav-item register py-1 px-2 px-md-2" asp-area="" asp-page="/Account/Register">Register</a>
-                            <a class="nav-link nav-item login py-1 px-2 px-md-2" asp-area="" asp-page="/Account/Login">Log In</a>
+                            @{
+                                @if (ViewData["loggedIn"] != null && (bool)ViewData["loggedIn"] == false)
+                                {
+                                    <a class="nav-link nav-item register py-1 px-2 px-md-2 d-flex align-items-center justify-content-center" asp-area="" asp-page="/Account/Register">Register</a>
+                                    <a class="nav-link nav-item login py-1 px-2 px-md-2 d-flex align-items-center justify-content-center" asp-area="" asp-page="/Account/Login">Log In</a>
+                                }
+                            }
                             <a class="nav-link nav-item" asp-area="" asp-page="/Account/Logout">Logout</a>
                         </div>
                     </div>
@@ -52,13 +57,13 @@
         </nav>
         <div style="height: 56px" class="mb-3"></div>
     </header>
-    <div class="container">
-        <main role="main" class="container-fluid p-0 d-flex flex-column gap-3">
+    <div class="container" style="min-height: 100vh">
+        <main role="main" class="container-fluid p-0 d-flex flex-column gap-3 mb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer text-white">
+    <footer class="text-white layout__footer">
         <div class="container">
             &copy; 2022 - MusicLibrary - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>

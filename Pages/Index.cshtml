@@ -2,6 +2,12 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    if (Model.loggedInUserName != null)
+    {
+        ViewData["loggedIn"] = true;
+    } else{
+        ViewData["loggedIn"] = false;
+    }
 }
 
 <div class="text-center">

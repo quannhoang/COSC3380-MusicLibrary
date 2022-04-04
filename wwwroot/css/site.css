@@ -14,12 +14,24 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
     background-color: #FBAB7E;
     background-image: linear-gradient(45deg, #FBAB7E 0%, #f7686a 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
 }
 
-h1{
+a{
+    text-decoration: none;
+    color: #717171;
+    transition: .25s;
+}
+
+    a:hover {
+        color: #4f4f4f;
+    }
+
+h1 {
     font-size: 1.75rem;
 }
 
@@ -65,12 +77,16 @@ h1{
 .table-container {
     padding: .5rem 0;
     background: #1C1715;
+    width: 100%;
     max-height: 325px;
+    border-radius: 8px;
+    box-shadow: 0 8px 10px 2px rgba(0,0,0,0.5);
     overflow-y: auto;
     position: relative;
 }
 
 .table {
+    border-radius: 8px;
     background: #322E2C;
     color: #FFA869;
     border: 0;
@@ -78,6 +94,13 @@ h1{
 
 svg {
     fill: #FFA869;
+}
+
+.hover-dark{
+    transition: .25s;
+}
+.hover-dark:hover {
+    fill: #D48B57;
 }
 
 .invert-icon {
@@ -89,13 +112,19 @@ svg {
     .invert-icon:hover {
         transform: translateX(-4px);
     }
+
     .invert-icon:active {
         transform: translateX(1px);
     }
 
 .logo-svg {
     filter: invert(66%) sepia(82%) saturate(380%) hue-rotate(328deg) brightness(100%) contrast(101%);
+    transition: .25s;
 }
+
+    .logo-svg:hover {
+        filter: invert(55%) sepia(56%) saturate(393%) hue-rotate(342deg) brightness(98%) contrast(95%);
+    }
 
 .navbar-dark .navbar-nav .nav-link.register {
     background: white;
@@ -147,8 +176,9 @@ svg {
     font-weight: 500;
 }
 
-.footer {
+.layout__footer {
     background: #1C1715;
+    padding: 1rem;
 }
 
 
@@ -175,6 +205,60 @@ svg {
         background: #444;
     }
 
+
+dl {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+dt {
+    flex-basis: 20%;
+}
+
+dd {
+    flex-basis: 70%;
+    flex-grow: 1;
+    margin: 0;
+    text-align: right;
+}
+
+
+.audio-player-card {
+    width: 350px;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #322E2C;
+    color: #FFA869;
+    box-shadow: 0 8px 10px 2px rgba(0,0,0,0.5);
+}
+
+.hover-btn {
+    transition: .3s ease-out;
+}
+
+    .hover-btn:hover {
+        transform: scale(1.15);
+    }
+
+    .hover-btn.hover-left:hover, .hover-btn.hover-left:focus {
+        transform: translateX(-5px);
+    }
+
+    .hover-btn.hover-left:active{
+        transform: translateX(2px);
+    }
+
+    .hover-btn.hover-right:hover, .hover-btn.hover-right:focus {
+        transform: translateX(5px);
+    }
+
+    .hover-btn.hover-right:active {
+        transform: translateX(-2px);
+    }
+
+.navbar-dark .navbar-nav .nav-link.login, .navbar-dark .navbar-nav .nav-link.register {
+    font-size: .9rem;
+}
 
 @media (max-width: 768px) {
     .navbar-dark .navbar-nav .nav-link.login, .navbar-dark .navbar-nav .nav-link.register {
