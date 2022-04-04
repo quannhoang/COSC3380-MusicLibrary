@@ -2,4 +2,116 @@
 @model MusicLibrary.Pages.Browse.Albums.PlayModel
 @{
 }
-<h1> This is where user play an album</h1>
+
+@{
+    ViewData["Title"] = "Play";
+}
+
+<h1>Album Player</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            First Song
+        </dd>
+        <dt class="col-sm-10">
+            <audio id="player"
+                   controls
+                   src="">
+            </audio>
+        </dt>
+        <dd>
+
+        </dd>
+        <dt>
+            <a asp-page="./Play">Previous</a>
+            <a asp-page="./Play">Next</a>
+        </dt>
+        <dd>
+
+        </dd>
+        <dt class="col-sm-2">
+            Upload Date
+        </dt>
+        <dd class="col-sm-10">
+            03/30/2022
+        </dd>
+        <dt class="col-sm-2">
+            Genre
+        </dt>
+        <dd class="col-sm-10">
+            Soul
+        </dd>
+        <dt class="col-sm-2">
+            Artist
+        </dt>
+        <dd class="col-sm-10">
+            Temp Artist
+        </dd>
+        <dt class="col-sm-2">
+            Length
+        </dt>
+        <dd class="col-sm-10">
+            00:03:52
+        </dd>
+    </dl>
+</div>
+
+<table class="table mb-0">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Upload Date
+            </th>
+            <th>
+                Genre
+            </th>
+            <th>
+                Artist
+            </th>
+            <th>
+                Length
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                First Song
+            </td>
+            <td>
+                03/30/2022
+            </td>
+            <td>
+                Soul
+            </td>
+            <td>
+                Temp Artist
+            </td>
+            <td>
+                00:03:52
+            </td>
+            <td>
+                <a asp-page="./Play">Play</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="Index">
+        <img class="invert-icon" src="~/images/icons8-back-arrow-64.png" width="40px" height="40px" />
+    </a>
+</div>
+
+<script>window.onload = function() {
+    document.getElementById("player").play();
+}</script>
