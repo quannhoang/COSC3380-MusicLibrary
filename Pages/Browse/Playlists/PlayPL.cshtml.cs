@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +11,13 @@ using MusicLibrary.Models;
 
 namespace MusicLibrary.Pages.Browse.Playlists
 {
-    public class PlayModel : PageModel
+    public class PlayPLModel : PageModel
     {
         private readonly MusicLibraryContext _db;
 
         private readonly BlobService _blobService;
 
-        public PlayModel(MusicLibraryContext context, BlobService blobService)
+        public PlayPLModel(MusicLibraryContext context, BlobService blobService)
         {
             _db = context;
             _blobService = blobService;
@@ -71,7 +71,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
             if (songID != null)
             {
                 currentSongIndex = findSongIndex(PlaylistSongs, songID);
-                return Redirect(String.Format("./Play?songIndex={0}&playlistID={1}", currentSongIndex, playlistID));
+                return Redirect(String.Format("./PlayPL?songIndex={0}&playlistID={1}", currentSongIndex, playlistID));
             }
 
             // If user choose Next, Or Previous, play based on songIndex

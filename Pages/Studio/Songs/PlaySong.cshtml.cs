@@ -17,8 +17,6 @@ namespace MusicLibrary.Pages.Studio.Songs
 
         private readonly BlobService _blobService;
 
-        private readonly IHostEnvironment _hostingEnvironment;
-
         public PlaySongModel(MusicLibraryContext context, BlobService blobService)
         {
             _db = context;

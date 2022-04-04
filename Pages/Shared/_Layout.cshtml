@@ -20,37 +20,42 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <div class="navbar-nav align-items-center w-100">
                         <a class="nav-link nav-item" asp-area="" asp-page="/Index">Home</a>
-                        <div class="dropdown">
-                            <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Browse
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" asp-page="/Browse/Songs/Index">Songs</a>
-                                <a class="dropdown-item" asp-page="/Browse/Playlists/Index">Playlists</a>
-                                <a class="dropdown-item" asp-page="/Browse/Albums/Index">Albums</a>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Studio
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" asp-page="/Studio/Songs/Index">Your Songs</a>
-                                <a class="dropdown-item" asp-page="/Studio/Playlists/Index">Your Playlists</a>
-                                <a class="dropdown-item" asp-page="/Studio/Albums/Index">Your Albums</a>
-                            </div>
-                        </div>
-                        <a class="nav-link nav-item" asp-area="" asp-page="/Report/Index">Report</a>
-                        <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
-                            @{
-                                @if (ViewData["loggedIn"] != null && (bool)ViewData["loggedIn"] == false)
-                                {
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="dropdown">
+                                    <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Browse
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-page="/Browse/Songs/Index">Songs</a>
+                                        <a class="dropdown-item" asp-page="/Browse/Playlists/Index">Playlists</a>
+                                        <a class="dropdown-item" asp-page="/Browse/Albums/Index">Albums</a>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Studio
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-page="/Studio/Songs/Index">Your Songs</a>
+                                        <a class="dropdown-item" asp-page="/Studio/Playlists/Index">Your Playlists</a>
+                                        <a class="dropdown-item" asp-page="/Studio/Albums/Index">Your Albums</a>
+                                    </div>
+                                </div>
+                                <a class="nav-link nav-item" asp-area="" asp-page="/Report/Index">Report</a>
+                                <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
+                                    <a class="nav-link nav-item" asp-area="" asp-page="/Account/Logout">Logout</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
                                     <a class="nav-link nav-item register py-1 px-2 px-md-2 d-flex align-items-center justify-content-center" asp-area="" asp-page="/Account/Register">Register</a>
                                     <a class="nav-link nav-item login py-1 px-2 px-md-2 d-flex align-items-center justify-content-center" asp-area="" asp-page="/Account/Login">Log In</a>
-                                }
+                                </div>
                             }
-                            <a class="nav-link nav-item" asp-area="" asp-page="/Account/Logout">Logout</a>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>

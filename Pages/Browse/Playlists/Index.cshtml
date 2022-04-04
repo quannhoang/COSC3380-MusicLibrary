@@ -36,7 +36,7 @@
             @foreach (var item in Model.Playlists)
             {
                 <tr>
-                    <td><a asp-page="./Play" asp-route-id="@item.PlaylistID"><img class="logo-svg" src="~/images/play-icon.png" width="18" height="18" /></a></td>
+                    <td><a asp-page="./PlayPL" asp-route-playlistID="@item.PlaylistID"><img class="logo-svg" src="~/images/play-icon.png" width="18" height="18" /></a></td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PlaylistName)
                     </td>
