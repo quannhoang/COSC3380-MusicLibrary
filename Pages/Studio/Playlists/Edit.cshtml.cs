@@ -26,6 +26,8 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public IList<Song> PlaylistSongs { get; set; }
 
+        public IList<Song> InsertedSong { get; set; }
+
         public IList<Song> AllSongs { get; set; }
 
         public int currentPlaylistID { get; set; }
@@ -74,7 +76,18 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
             if (addSongID != null) // If user want to add song to playlist
             {
-                _db.Database.ExecuteSqlRaw("Insert into [dbo].[PlaylistSongs] (PlaylistID, SongID) values({0}, {1}) ", currentPlaylistID, addSongID);
+                var insertedSongs = from s in _db.Song.FromSqlRaw("SELECT S.* from dbo.Song S, dbo.Playlist PL, dbo.PlaylistSongs PLS"
+                                                             + " WHERE PL.PlaylistID = PLS.PlaylistID"
+                                                             + " AND S.SongID = PLS.SongID"
+                                                             + " AND PL.PlayListID = {0}"
+                                                             + " AND PLS.SongID = {1}", currentPlaylistID, addSongID)
+                                    select s;
+
+                InsertedSong = await insertedSongs.Distinct().ToListAsync();
+                
+;               Console.WriteLine(InsertedSong.Count());
+                if (InsertedSong.Count()==0)
+                    _db.Database.ExecuteSqlRaw("Insert into [dbo].[PlaylistSongs] (PlaylistID, SongID) values({0}, {1}) ", currentPlaylistID, addSongID);
                 return Redirect("./Edit?id=" + currentPlaylistID.ToString());
             }
 

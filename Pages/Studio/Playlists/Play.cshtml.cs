@@ -47,7 +47,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 return NotFound();
             }
 
-            // Select songs that are in the playlist (so user can remove from playlist if needed)
+            // Select songs that are in the playlist 
             var playlistSongs = from s in _db.Song.FromSqlRaw("SELECT S.* from dbo.Song S, dbo.Playlist PL, dbo.PlaylistSongs PLS"
                                                             + " WHERE PL.PlaylistID = PLS.PlaylistID"
                                                             + " AND S.SongID = PLS.SongID"
@@ -55,6 +55,10 @@ namespace MusicLibrary.Pages.Studio.Playlists
                                 select s;
 
             PlaylistSongs = await playlistSongs.Distinct().ToListAsync();
+            if (PlaylistSongs.Count == 0) // If Playlist is empty
+            {
+                return Page();
+            }
             // If Page is loaded the first time or no songID is provided, play the first song in the playlist
             if ((songID == null)&&(songIndex == null))
             {
