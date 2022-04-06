@@ -38,6 +38,11 @@ namespace MusicLibrary.Pages.Account
             if (UserExists(LoginUserName))
             {
                 UserFromDB = _db.User.First(u => u.UserName == LoginUserName);
+                if (UserFromDB.IsSuspended)
+                {
+                    ModelState.AddModelError(string.Empty, "User account is suspended. Please contact the page's Administrator.");
+                    return Page();
+                }
 
                 // Hash passwords
                 byte[] salt = new byte[128 / 8];
@@ -49,10 +54,25 @@ namespace MusicLibrary.Pages.Account
                                                             numBytesRequested: 256 / 8));
                 if (HashedPass == UserFromDB.Passwords) // If UserExists and Passwords match, begin authentication
                 {
-                    var claims = new List<Claim> {
+                    var claims = new List<Claim> {};
+                    
+                    if (UserFromDB.IsAdmin)
+                    {
+                        claims = new List<Claim> {
                         new Claim(ClaimTypes.Name, UserFromDB.UserName),
-                        new Claim(ClaimTypes.Email, UserFromDB.Email)
-                    };
+                        new Claim(ClaimTypes.Email, UserFromDB.Email),
+                        new Claim("Role", "Admin")
+                        };
+                    }
+                    else 
+                    {
+                        claims = new List<Claim> {
+                        new Claim(ClaimTypes.Name, UserFromDB.UserName),
+                        new Claim(ClaimTypes.Email, UserFromDB.Email),
+                        new Claim("Role", "Regular User")
+                        };
+                    }
+
                     var identity = new ClaimsIdentity(claims, "MusicLibraryCookie");
                     ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync("MusicLibraryCookie", claimsPrincipal);

@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Studio.Playlists
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly MusicLibraryContext _db;

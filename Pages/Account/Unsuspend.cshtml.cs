@@ -1,29 +1,23 @@
-﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
-using MusicLibrary.Models;
-using Microsoft.AspNetCore.Authorization;
 
-namespace MusicLibrary.Pages.Studio.Playlists
+namespace MusicLibrary.Pages.Account
 {
-    [Authorize]
-    public class DeleteModel : PageModel
+    [Authorize(Policy = "MustBeAdmin")]
+    public class UnsuspendModel : PageModel
     {
         private readonly MusicLibraryContext _db;
 
-        public DeleteModel(MusicLibraryContext context)
+        public UnsuspendModel(MusicLibraryContext context)
         {
             _db = context;
         }
 
         [BindProperty]
-        public Playlist playlist { get; set; }
+        public MusicLibrary.Models.User CurrentUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,11 +26,16 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 return NotFound();
             }
 
-            playlist = await _db.Playlist.FirstOrDefaultAsync(p => p.PlaylistID == id);
+            CurrentUser = await _db.User.FirstOrDefaultAsync(u => u.UserID == id);
 
-            if (playlist == null)
+            if (CurrentUser == null)
             {
                 return NotFound();
+            }
+
+            if (!CurrentUser.IsSuspended || CurrentUser.UserName == User.Identity.Name)
+            {
+                return RedirectToPage("./Manage");
             }
 
             return Page();
@@ -49,15 +48,16 @@ namespace MusicLibrary.Pages.Studio.Playlists
                 return NotFound();
             }
 
-            playlist = await _db.Playlist.FindAsync(id);
+            CurrentUser = await _db.User.FirstOrDefaultAsync(u => u.UserID == id);
 
-            if (playlist != null)
+            if (CurrentUser != null)
             {
-                _db.Playlist.Remove(playlist);
+                CurrentUser.IsSuspended = false;
                 await _db.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+
+            return RedirectToPage("./Manage");
         }
     }
 }

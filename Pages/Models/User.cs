@@ -38,6 +38,8 @@ namespace MusicLibrary.Models
 
         public Boolean IsArtist { get; set; } = false;
 
+        public Boolean IsSuspended { get; set; } = false;
+
         [DataType(DataType.Date)]
         [Required]
         public DateTime CreateDate { get; set; } = DateTime.Today;

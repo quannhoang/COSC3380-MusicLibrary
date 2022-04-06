@@ -1,36 +1,33 @@
-#nullable disable
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
-using MusicLibrary.Models;
 
-namespace MusicLibrary.Pages.Browse.Playlists
+namespace MusicLibrary.Pages.Account
 {
-    [Authorize]
-    public class IndexModel : PageModel
+    [Authorize(Policy = "MustBeAdmin")]
+    public class ManageModel : PageModel
     {
         private readonly MusicLibraryContext _db;
 
-        public IndexModel(MusicLibraryContext context)
+        public ManageModel(MusicLibraryContext context)
         {
             _db = context;
         }
-        public IList<Playlist> Playlists { get; set; }
+        public IList<MusicLibrary.Models.User> Users { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }
 
         public async Task OnGet()
         {
-            var playlists = from pl in _db.Playlist select pl;
+            var allusers = from u in _db.User select u;
             if (!string.IsNullOrEmpty(searchString))
             {
-                playlists = playlists.Where(pl => pl.PlaylistName.Contains(searchString));
+                allusers = allusers.Where(u => u.UserName.Contains(searchString));
             }
-            Playlists = await playlists.ToListAsync();
-
+            Users = await allusers.ToListAsync();
         }
     }
 }

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Browse.Songs
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly MusicLibraryContext _db;

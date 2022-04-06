@@ -19,6 +19,11 @@ builder.Services.AddAuthentication("MusicLibraryCookie").AddCookie("MusicLibrary
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MustBeAdmin", policy => policy.RequireClaim("Role", "Admin"));
+});
+
 builder.Services.AddDbContext<MusicLibraryContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDBContext")));
 

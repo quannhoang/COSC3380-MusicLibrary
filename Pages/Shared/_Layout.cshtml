@@ -44,9 +44,14 @@
                                     </div>
                                 </div>
                                 <a class="nav-link nav-item" asp-area="" asp-page="/Report/Index">Report</a>
+                                if (User.HasClaim("Role", "Admin"))
+                                {
+                                        <a class="nav-link nav-item" asp-area="" asp-page="/Account/Manage">Manage Users</a>
+                                }
                                 <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
                                     <a class="nav-link nav-item" asp-area="" asp-page="/Account/Logout">Logout</a>
                                 </div>
+
                             }
                             else
                             {
