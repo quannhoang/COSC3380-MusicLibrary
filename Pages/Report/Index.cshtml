@@ -11,5 +11,11 @@
 </div>
 
 <div>
-    <button type="button">Generate Results</button>
+    <form method="post">
+    <input type="date" name="from"/>
+    <input type="date" name="to"/>
+    <button type="submit" >Generate Results</button>
+    </form>
 </div>
+
+@{//@Html.Raw(Model.AllAlBums[0].AlbumName)}

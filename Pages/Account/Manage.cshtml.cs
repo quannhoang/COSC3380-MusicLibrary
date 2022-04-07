@@ -22,7 +22,10 @@ namespace MusicLibrary.Pages.Account
 
         public async Task OnGet()
         {
+            // Select all users from DB
             var allusers = from u in _db.User select u;
+
+            // Search for username if searchString is provided
             if (!string.IsNullOrEmpty(searchString))
             {
                 allusers = allusers.Where(u => u.UserName.Contains(searchString));

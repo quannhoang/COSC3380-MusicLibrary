@@ -38,6 +38,8 @@ namespace MusicLibrary.Pages.Account
             if (UserExists(LoginUserName))
             {
                 UserFromDB = _db.User.First(u => u.UserName == LoginUserName);
+                
+                // If user is suspended, prevent user from logging in
                 if (UserFromDB.IsSuspended)
                 {
                     ModelState.AddModelError(string.Empty, "User account is suspended. Please contact the page's Administrator.");
@@ -56,7 +58,7 @@ namespace MusicLibrary.Pages.Account
                 {
                     var claims = new List<Claim> {};
                     
-                    if (UserFromDB.IsAdmin)
+                    if (UserFromDB.IsAdmin) // Define identity claims for Admin
                     {
                         claims = new List<Claim> {
                         new Claim(ClaimTypes.Name, UserFromDB.UserName),
@@ -64,7 +66,7 @@ namespace MusicLibrary.Pages.Account
                         new Claim("Role", "Admin")
                         };
                     }
-                    else 
+                    else // Define identity claims for regular user
                     {
                         claims = new List<Claim> {
                         new Claim(ClaimTypes.Name, UserFromDB.UserName),
