@@ -24,6 +24,7 @@ namespace MusicLibrary.Models
         public User? User { get; set; }
 
         [StringLength(30, MinimumLength = 3)]
+        [Display(Name = "Artist")]
         [ForeignKey("User")]
         public string ArtistName { get; set; } = string.Empty;
     }

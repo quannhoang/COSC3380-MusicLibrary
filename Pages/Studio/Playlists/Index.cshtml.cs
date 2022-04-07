@@ -26,12 +26,19 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public async Task OnGet()
         {
+            // Get currently logged in user name
             loggedInUserName = HttpContext.User.Identity.Name;
+
+            // Get only playlists that are created by current user
             var playlists = from pl in _db.Playlist.Where(pl => pl.UserName == loggedInUserName) select pl;
+
+            // If searchString is not empty, search for playlist that searchString in its name (contains)
             if (!string.IsNullOrEmpty(searchString))
             {
                 playlists = playlists.Where(pl => pl.PlaylistName.Contains(searchString));
             }
+
+            // Update playlists display for front end
             Playlists = await playlists.ToListAsync();
 
         }

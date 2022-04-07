@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Browse\Playlists\Play.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
@@ -36,7 +32,6 @@
     <None Include="Pages\Browse\Albums\Details.cshtml" />
     <None Include="Pages\Browse\Albums\Index.cshtml" />
     <None Include="Pages\Browse\Albums\Play.cshtml" />
-    <None Include="Pages\Browse\Playlists\Play.cshtml" />
     <None Include="Pages\Studio\Playlists\Create.cshtml" />
     <None Include="Pages\Studio\Playlists\Delete.cshtml" />
     <None Include="Pages\Studio\Playlists\Edit.cshtml" />

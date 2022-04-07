@@ -30,6 +30,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public IActionResult OnGet()
         {
+            // Get currently logged in username and assign it to new playlist
             loggedInUserName = HttpContext.User.Identity.Name;
             playlist.UserName = loggedInUserName;
             return Page();
@@ -38,11 +39,13 @@ namespace MusicLibrary.Pages.Studio.Playlists
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            
-            if (!ModelState.IsValid) // Form inputs are invalid (example: name too short)
+            // Form inputs are invalid (example: name too short) do nothing
+            if (!ModelState.IsValid) 
             {
                 return Page();
             }
+
+            // If inputs are good, create playlist
             _db.Playlist.Add(playlist);
             await _db.SaveChangesAsync();
             // FIXME: Add Else print some error 

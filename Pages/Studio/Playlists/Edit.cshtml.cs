@@ -36,6 +36,8 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
         public PlaylistSongs removePlaylistSongs { get; set; }
 
+        public MusicLibrary.Models.User CurrentUser { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int? id, int? removeSongID, int? addSongID)
         {
@@ -49,6 +51,12 @@ namespace MusicLibrary.Pages.Studio.Playlists
             if (playlist == null) // If query return nothing, return not found page
             {
                 return NotFound();
+            }
+
+            // If user try to edit playlist that is not owned by user, route to access denied
+            if (playlist.UserName != HttpContext.User.Identity.Name)
+            {
+                return RedirectToPage("/Account/AccessDenied");
             }
 
             // Select songs that are in the playlist (so user can remove from playlist if needed)
@@ -78,6 +86,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
             if (addSongID != null) // If user want to add song to playlist
             {
+                // Check if song is already in playlist to make sure
                 var insertedSongs = from s in _db.Song.FromSqlRaw("SELECT S.* from dbo.Song S, dbo.Playlist PL, dbo.PlaylistSongs PLS"
                                                              + " WHERE PL.PlaylistID = PLS.PlaylistID"
                                                              + " AND S.SongID = PLS.SongID"
@@ -87,7 +96,7 @@ namespace MusicLibrary.Pages.Studio.Playlists
 
                 InsertedSong = await insertedSongs.Distinct().ToListAsync();
                 
-;               Console.WriteLine(InsertedSong.Count());
+                // If song is not already in playlist, add it in playlist
                 if (InsertedSong.Count()==0)
                     _db.Database.ExecuteSqlRaw("Insert into [dbo].[PlaylistSongs] (PlaylistID, SongID) values({0}, {1}) ", currentPlaylistID, addSongID);
                 return Redirect("./Edit?id=" + currentPlaylistID.ToString());
@@ -96,17 +105,18 @@ namespace MusicLibrary.Pages.Studio.Playlists
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync() //This function is where playlist name can be changed (post method)
         {
+            // If inputs are not correct, does nothing
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            // Change playlist 
             _db.Attach(playlist).State = EntityState.Modified;
 
+            // Save to database
             try
             {
                 await _db.SaveChangesAsync();
@@ -126,6 +136,8 @@ namespace MusicLibrary.Pages.Studio.Playlists
             return RedirectToPage("./Index");
         }
 
+        
+        // Function to check if playlist exists in database using playlist id
         private bool PlaylistExists(int id)
         {
             return _db.Playlist.Any(pl => pl.PlaylistID == id);
