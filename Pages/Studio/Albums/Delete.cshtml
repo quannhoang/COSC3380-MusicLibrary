@@ -13,44 +13,36 @@
 <div class="styled-form row py-3">
     <dl class="row">
         <dt class="col-sm-2 text-white">
-            Name
+            @Html.DisplayNameFor(model => model.album.AlbumName)
         </dt>
         <dd class="col-sm-10 text-white">
-            My First Album
+            @Html.DisplayFor(model => model.album.AlbumName)
         </dd>
         <dt class="col-sm-2 text-white">
-            Create Date
+            @Html.DisplayNameFor(model => model.album.CreateDate)
         </dt>
         <dd class="col-sm-10 text-white">
-            3/30/2022
+            @Html.DisplayFor(model => model.album.CreateDate)
         </dd>
         <dt class="col-sm-2 text-white">
-            Genre
+            @Html.DisplayNameFor(model => model.album.ArtistName)
         </dt>
         <dd class="col-sm-10 text-white">
-            R&B
+            @Html.DisplayFor(model => model.album.ArtistName)
         </dd>
         <dt class="col-sm-2 text-white">
-            Artist
+            @Html.DisplayNameFor(model => model.album.SongCount)
         </dt>
         <dd class="col-sm-10 text-white">
-            Temp Artist
-        </dd>
-        <dt class="col-sm-2 text-white">
-            Number of Songs
-        </dt>
-        <dd class="col-sm-10 text-white">
-            4
+            @Html.DisplayFor(model => model.album.SongCount)
         </dd>
     </dl>
 
     <form method="post">
-        <input type="hidden" />
+        <input type="hidden" asp-for="album.AlbumID"/>
         <input type="submit" value="Delete" class="btn btn-danger" />
     </form>
 </div>
 <div>
-    <a asp-page="Index">
-        <img class="invert-icon" src="~/images/icons8-back-arrow-64.png" width="40px" height="40px" />
-    </a>
+    <a asp-page="./Index">Back to Albums</a>
 </div>
