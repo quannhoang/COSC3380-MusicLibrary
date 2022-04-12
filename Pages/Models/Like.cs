@@ -4,6 +4,9 @@ namespace MusicLibrary.Models
 {
     public class Like
     {
+        [Key]
+        public int LikeID { get; set; }
+
         /*public User? User { get; set; }
 
         [ForeignKey("User")]
@@ -18,7 +21,6 @@ namespace MusicLibrary.Models
 
         [ForeignKey("UserName")]
         public User? User { get; set; }
-
 
 
         public int? SongID { get; set; }
