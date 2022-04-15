@@ -28,6 +28,7 @@ namespace MusicLibrary.Pages.Browse.Songs
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            string loggedInUserName = HttpContext.User.Identity.Name;  
             if (id == null)
             {
                 return NotFound();
@@ -40,6 +41,7 @@ namespace MusicLibrary.Pages.Browse.Songs
                 return NotFound();
             }
             songUri = await _blobService.GetFile(Song.FileName);
+            _db.Database.ExecuteSqlRaw("Insert into [dbo].[View] (UserName, SongID, ViewDate) values({0}, {1}, {2}) ", loggedInUserName, id, DateTime.Now);
             return Page();
         }
     }

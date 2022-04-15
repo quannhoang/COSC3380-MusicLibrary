@@ -37,6 +37,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
 
         public async Task<IActionResult> OnGetAsync(int? playlistID, int? songID, int? songIndex)
         {
+            string loggedInUserName = HttpContext.User.Identity.Name;
             if (playlistID == null) // If no playlisID provided, return not found page
             {
                 return NotFound();
@@ -68,6 +69,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
                     return NotFound();
                 }
                 SongUri = await _blobService.GetFile(CurrentSong.FileName);
+                _db.Database.ExecuteSqlRaw("Insert into [dbo].[View] (UserName, SongID, ViewDate) values({0}, {1}, {2}) ", loggedInUserName, PlaylistSongs[0].SongID, DateTime.Now);
             }
 
             // If user choose a song, play that song
@@ -90,6 +92,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
         // Function to load and play song based on songIndex
         private async Task<IActionResult> loadSong(IList<Song> PLaylistSongs, int? inputSongIndex)
         {
+            string loggedInUserName = HttpContext.User.Identity.Name;
             int localSongIndex = (int)inputSongIndex;
             if (localSongIndex < 0) localSongIndex = PLaylistSongs.Count() - 1;
             if (localSongIndex >= PLaylistSongs.Count) localSongIndex = 0;
@@ -101,6 +104,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
                 return NotFound();
             }
             SongUri = await _blobService.GetFile(CurrentSong.FileName);
+            _db.Database.ExecuteSqlRaw("Insert into [dbo].[View] (UserName, SongID, ViewDate) values({0}, {1}, {2}) ", loggedInUserName, PLaylistSongs[localSongIndex].SongID, DateTime.Now);
             return Page();
         }
 

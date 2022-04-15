@@ -1,0 +1,89 @@
+﻿@page
+@model MusicLibrary.Pages.Report.SongReportModel
+@{
+//<span> @{foreach (var item in Model.LineChartItems) @Html.Raw(item + ',')}</span>
+//<span>@{foreach (var data in Model.LineChartData) @Html.Raw(data.ToString() + ',')}</span>
+}
+<h1>Trending Report</h1>
+<span>Please choose a date range for report</span>
+<form method="post">
+    <input type="date" name="from"/>
+    <input type="date" name="to"/>
+    <input type="submit" value="Submit"/>
+</form>
+@{
+    if (Model.ErrorMessage!=null)
+    {
+        <span class="text-danger">@Model.ErrorMessage</span>
+    }
+
+}
+
+<div style="width:80%;height:20%;align-content:center">
+<canvas id="barChartCanvas" width="100" height="30"></canvas>
+</div>
+
+<div style="width:80%;height:20%;align-content:center">
+<canvas id="lineChartCanvas" width="100" height="30"></canvas>
+</div>
+<script src="~/js/chart.min.js"></script>
+<script>
+
+const bar_ctx = document.getElementById('barChartCanvas').getContext('2d');
+const barChart = new Chart(bar_ctx, {
+    type: 'bar',
+    data: {
+        labels: [@{foreach (var item in Model.BarChartItems) @Html.Raw("'" + item + "'" + ',')}],
+        datasets: [{
+            label: '# of Songs',
+            data: [@{foreach (var data in Model.BarChartData) @Html.Raw(data.ToString() + ',')}],
+            backgroundColor: [ @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(0, 102, 204, 0.8)',")}],
+            borderColor: [  @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(255, 99, 132, 1)',")}],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Song upload trend'
+            }
+        }
+    }
+});
+
+const line_ctx = document.getElementById('lineChartCanvas').getContext('2d');
+const lineChart = new Chart(line_ctx, {
+    type: 'line',
+    data: {
+        labels: [@{foreach (var item in Model.LineChartItems) @Html.Raw("'" + item + "'" + ',')}],
+        datasets: [{
+            label: 'Views',
+            data: [@{foreach (var data in Model.LineChartData) @Html.Raw(data.ToString() + ',')}],
+            backgroundColor: [ @{foreach (var data in Model.LineChartData) @Html.Raw("'rgba(255, 204, 204, 0.8)',")}],
+            borderColor: [  @{foreach (var data in Model.LineChartData) @Html.Raw("'rgba(0, 102, 204, 1)',")}],
+            borderWidth: 2,
+            radius:4
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Views over time'
+            }
+        }
+    }
+});
+</script>
+ 

@@ -30,12 +30,20 @@ namespace MusicLibrary.Pages.Report
             AllAlBums = await allAlbumsFromDB.ToListAsync();
             //fromDate = "This is my date";
         }   
-        public void OnPost(string? to, string? from) //On clicking submit a form
+        public async Task OnPost(string? to, string? from) //On clicking submit a form
         {
-            if (to != null || from !=null)
+            if (to != null && from !=null)
             {
+
                 Console.WriteLine(from);
                 Console.WriteLine(to);
+                fromDate = from;
+                toDate = to;
+                var allAlbumsFromDB = from a in _db.Album.FromSqlRaw("SELECT * FROM dbo.Album"
+                                                                + " WHERE CreateDate >= {0}"
+                                                                + " AND CreateDate <= {1}", fromDate, toDate)
+                                      select a;
+                AllAlBums = await allAlbumsFromDB.ToListAsync();
             }
 
         }
