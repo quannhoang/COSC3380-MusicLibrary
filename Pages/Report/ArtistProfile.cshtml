@@ -1,0 +1,48 @@
+﻿@page
+@model MusicLibrary.Pages.Report.ArtistProfileModel
+@{
+}
+
+<h1>Artist Profile Report</h1>
+
+<span>Please select an artist name</span>
+
+<form method="post">
+    <div class="container-fluid d-flex justify-content-start p-0 gap-3">
+        <select asp-for="inputArtistName" asp-items="Model.ArtistList" class="input-bg px-2">
+            <option value="">Artist name...</option>
+        </select>
+        <button class="btn btn-primary" type="submit">View Report</button>
+    </div>
+</form>
+
+<div style="width:30%;height:20%:align:right">
+<canvas id="pieChartCanvas" width="30" height="20"></canvas>
+</div>
+
+
+<script src="~/js/chart.min.js"></script>
+<script>
+
+const pie_ctx = document.getElementById('pieChartCanvas').getContext('2d');
+const pieChart = new Chart(pie_ctx, {
+    type: 'doughnut',
+    data:{
+      labels: [
+        'Red',
+        'Blue',
+        'Yellow'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50, 100],
+        backgroundColor: [
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+      }]
+    }
+});
+</script>
