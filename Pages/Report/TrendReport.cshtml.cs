@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
@@ -23,17 +21,18 @@ namespace MusicLibrary.Pages.Report
 
         public string frontTo { get; set; } = string.Empty;
 
-        public IList<ReportItem> ReportItemList { get; set; } = new List<ReportItem>( new ReportItem[] { });
+        public IList<ReportItem> ReportItemList { get; set; } = new List<ReportItem>(new ReportItem[] { });
 
-        public IList<string> BarChartItems { get; set; } = new List<string>( new string[]{});
-        public IList<int> BarChartData { get; set; } = new List<int>( new int[]{});
+        public IList<string> BarChartItems { get; set; } = new List<string>(new string[] { });
+        public IList<int> BarChartData { get; set; } = new List<int>(new int[] { });
 
         public IList<string> LineChartItems { get; set; } = new List<string>(new string[] { });
         public IList<int> LineChartData { get; set; } = new List<int>(new int[] { });
 
         public IList<Song> SongList { get; set; }
 
-        public IList<View>  ViewList { get; set; }
+        public IList<View> ViewList { get; set; }
+        public Dictionary<string, int> GenreViewList = new Dictionary<string, int>();
 
         public string ErrorMessage { get; set; } = string.Empty;
 
@@ -44,7 +43,7 @@ namespace MusicLibrary.Pages.Report
         public async Task<IActionResult> OnPostAsync(string? from, string? to)
         {
             // If either from or to date is not provided, does nothing
-            if (from == null || to == null) 
+            if (from == null || to == null)
             {
                 return Page();
             }
@@ -65,7 +64,7 @@ namespace MusicLibrary.Pages.Report
 
             // Get all songs uploaded between from and to dates
             var songs = from s in _db.Song.FromSqlRaw($"SELECT * FROM [dbo].[Song] WHERE UploadDate >= '{from}' AND UploadDate <= '{to}'")
-                        select s ;
+                        select s;
             SongList = await songs.ToListAsync();
 
             // Do calculation for song upload trend report and chart
@@ -92,7 +91,7 @@ namespace MusicLibrary.Pages.Report
 
             ReportItem avgSUpload = new ReportItem();
             avgSUpload.Label = "Average daily uploads";
-            avgSUpload.Value = ((float)BarChartData.Sum()/BarChartData.Count()).ToString();
+            avgSUpload.Value = ((float)BarChartData.Sum() / BarChartData.Count()).ToString();
             ReportItemList.Add(avgSUpload);
 
             ReportItem minSUpload = new ReportItem();
@@ -109,6 +108,38 @@ namespace MusicLibrary.Pages.Report
             maxSUploadDate.Label = "Date that has maximum uploads";
             maxSUploadDate.Value = maxDate;
             ReportItemList.Add(maxSUploadDate);
+
+
+            // Get the most popular song and genre between from and to dates
+            Song maxView = SongList[0];
+            foreach (Song song in SongList)
+            {
+                if (song.ViewCount + song.LikeCount > maxView.ViewCount + maxView.LikeCount)
+                {
+                    maxView = song;
+                }
+
+                if (!GenreViewList.ContainsKey(song.Genre))
+                {
+                    GenreViewList[song.Genre] = song.ViewCount;
+                }
+                else
+                {
+                    GenreViewList[song.Genre] += song.ViewCount;
+                }
+            }
+
+            int GenrePopular = GenreViewList.Values.Max();
+
+            ReportItem mostPopularSong = new ReportItem();
+            mostPopularSong.Label = "The most popular song";
+            mostPopularSong.Value = maxView.Name;
+            ReportItemList.Add(mostPopularSong);
+
+            ReportItem mostPopularGenre = new ReportItem();
+            mostPopularGenre.Label = "Most popular genre";
+            mostPopularGenre.Value = GenreViewList.FirstOrDefault(x => x.Value == GenrePopular).Key;
+            ReportItemList.Add(mostPopularGenre);
 
             // Get all views that have Viewdate between from and to dates
             var views = from v in _db.View.FromSqlRaw($"SELECT * FROM [dbo].[View] WHERE ViewDate >= '{from}' AND ViewDate <= '{to}'")
