@@ -1,14 +1,38 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using MusicLibrary.DataAccess.Data;
+using MusicLibrary.Models;
 
 namespace MusicLibrary.Pages.Browse.Albums
 {
-   [Authorize]
+    [Authorize]
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        private readonly MusicLibraryContext _db;
+
+        public IndexModel(MusicLibraryContext context)
         {
+            _db = context;
+        }
+
+        public IList<Album> Albums { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+
+        public string searchString { get; set; }
+
+        public async Task OnGet()
+        {
+            var albums = from al in _db.Album select al;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                albums = albums.Where(al => al.AlbumName == searchString);
+            }
+
+            Albums = await albums.ToListAsync();
         }
     }
 }
