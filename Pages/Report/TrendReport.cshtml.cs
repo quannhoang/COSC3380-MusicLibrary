@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using MusicLibrary.Models;
 
 namespace MusicLibrary.Pages.Report
 {
+    [Authorize]
     public class TrendReportModel : PageModel
     {
         private readonly MusicLibraryContext _db;

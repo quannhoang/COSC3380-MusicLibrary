@@ -28,7 +28,9 @@ namespace MusicLibrary.Pages.Browse.Songs
 
         [BindProperty(SupportsGet = true)]
         public string searchGenre { get; set; }
-        public async Task OnGet(int? LikeSongID)
+
+        public IList<int> LikeList { get; set; } = new List<int>(new int[] { });
+        public async Task<IActionResult> OnGetAsync(int? LikeSongID)
         {
             loggedInUserName = HttpContext.User.Identity.Name;
             IQueryable<string> genreQuery = from s in _db.Song
@@ -45,6 +47,20 @@ namespace MusicLibrary.Pages.Browse.Songs
             }
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             Songs = await songs.ToListAsync();
+            
+
+            foreach (var song in Songs)
+            {
+                var likeFromCurrentUser = _db.Like.FromSqlRaw("SELECT * FROM [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", song.SongID, loggedInUserName);
+                if (likeFromCurrentUser.Count() > 0)
+                {
+                    LikeList.Add(1);
+                }
+                else
+                {
+                    LikeList.Add(0);
+                }
+            }
 
             if (LikeSongID != null)
             {
@@ -53,13 +69,16 @@ namespace MusicLibrary.Pages.Browse.Songs
                 if (LikeSongList.Count() == 0)
                 {
                     _db.Database.ExecuteSqlRaw("Insert into [dbo].[Like] (UserName, SongID) values({0}, {1}) ", loggedInUserName, LikeSongID);
+                    return RedirectToPage("./Index");
                 }
                 else
                 {
                     _db.Database.ExecuteSqlRaw("DELETE FROM [dbo].[Like] WHERE UserName = {0} AND SongID = {1}", loggedInUserName, LikeSongID);
+                    return RedirectToPage("./Index");
                 }
 
             }
+            return Page();
         }
     }
 }

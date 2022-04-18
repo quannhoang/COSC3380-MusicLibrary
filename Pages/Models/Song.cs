@@ -33,9 +33,11 @@ namespace MusicLibrary.Models
         [StringLength(30, MinimumLength = 3)]
         public string Length { get; set; } = String.Empty;
 
+        [Display(Name="Views")]
         [Required]
         public int ViewCount { get; set; } = 0;
 
+        [Display(Name = "Likes")]
         [Required]
         public int LikeCount { get; set; } = 0;
 

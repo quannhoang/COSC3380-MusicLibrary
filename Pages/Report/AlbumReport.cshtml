@@ -15,52 +15,129 @@
     <button type="submit" class="input-bg px-2">View Report</button>
     </form>
 </div>
-
-<div class="table-container">
-    <table class="table mb-0">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AllAlbums[0].AlbumName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AllAlbums[0].CreateDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AllAlbums[0].ArtistName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AllAlbums[0].SongCount)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.AllAlbums)
-                {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AlbumName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreateDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ArtistName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SongCount)
-                    </td>
-                </tr>
-                }
-            </tbody>
-    </table>
-</div>
-
-<div>
-<h6 style="font-size:26px;">Total Number of Albums released during this period: @Html.Raw(Model.AllAlbumsSize.ToString())</h6>
-</div>
-
 @{
-    //@Html.Raw(Model.AllAlBums[0].AlbumName)
+    if (Model.ErrorMessage!=null)
+    {
+        <span class="text-danger">@Model.ErrorMessage</span>
+    }
+
 }
+@{
+    if (Model.Submitted==true)
+    {
+        <div class="table-container">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllAlbums[0].AlbumName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllAlbums[0].CreateDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllAlbums[0].ArtistName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.AllAlbums[0].SongCount)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.AllAlbums)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AlbumName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ArtistName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SongCount)
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+            </table>
+        </div>
+
+            <div class="table-container">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Albums Report for date range: @Model.fromDate - @Model.toDate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                    <th>
+                                        Label
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                </tr>
+            
+                                @foreach (var item in Model.ReportItemList)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Label)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value)
+                                    </td>
+                                </tr>
+                                }
+
+                
+                        </tbody>
+                    </table>
+
+        </div>
+
+        <div style="width:100%;height:30% display:inline">
+        <canvas id="barChartCanvas" width="100" height="30"></canvas>
+        </div>
+    }
+}
+
+
+<script src="~/js/chart.min.js"></script>
+<script>
+
+const bar_ctx = document.getElementById('barChartCanvas').getContext('2d');
+const barChart = new Chart(bar_ctx, {
+    type: 'bar',
+    data: {
+        labels: [@{foreach (var item in Model.BarChartItems) @Html.Raw("'" + item + "'" + ',')}],
+        datasets: [{
+            label: '# of Albums',
+            data: [@{foreach (var data in Model.BarChartData) @Html.Raw(data.ToString() + ',')}],
+            backgroundColor: [ @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(153, 0, 0, 0.6)',")}],
+            borderColor: [  @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(255, 99, 132, 1)',")}],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Album create trend'
+            }
+        }
+    }
+});
+
+
+</script>

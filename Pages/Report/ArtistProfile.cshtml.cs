@@ -4,10 +4,11 @@ using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Report
 {
+    [Authorize]
     public class ArtistProfileModel : PageModel
     {
         private readonly MusicLibraryContext _db;
@@ -52,6 +53,12 @@ namespace MusicLibrary.Pages.Report
             // If artist name is not found in DB
             var artist = _db.User.FirstOrDefault(u => u.UserName == inputArtistName);
             if (artist == null) return await OnGetAsync();
+
+            // When loading the page, get all artist names for selection box in front end
+            IQueryable<string> allArtist = from u in _db.User.FromSqlRaw("SELECT * FROM [dbo].[User] WHERE isArtist=1")
+                                           orderby u.UserName
+                                           select u.UserName;
+            ArtistList = new SelectList(await allArtist.ToListAsync());
 
             ReportItem joinDate = new ReportItem();
             joinDate.Label = "Date joined";
