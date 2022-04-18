@@ -1,3 +1,11 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MusicLibrary.DataAccess.Data;
+using MusicLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+
 namespace MusicLibrary.Pages.Report
 {
     public class ArtistProfileModel : PageModel
