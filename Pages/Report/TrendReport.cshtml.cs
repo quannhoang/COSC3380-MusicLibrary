@@ -15,7 +15,7 @@ namespace MusicLibrary.Pages.Report
             _db = context;
         }
 
-        public bool submitted { get; set; } = false;
+        public bool Submitted { get; set; } = false;
 
         public string frontFrom { get; set; } = string.Empty;
 
@@ -60,7 +60,7 @@ namespace MusicLibrary.Pages.Report
             frontTo = to;
 
             // Toggle submitted for front end to display results
-            submitted = true;
+            Submitted = true;
 
             // Get all songs uploaded between from and to dates
             var songs = from s in _db.Song.FromSqlRaw($"SELECT * FROM [dbo].[Song] WHERE UploadDate >= '{from}' AND UploadDate <= '{to}'")

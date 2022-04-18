@@ -9,7 +9,7 @@
 <form method="post">
     <input type="date" name="from"/>
     <input type="date" name="to"/>
-    <input type="submit" value="Submit"/>
+    <input type="submit" class="input-bg px-2" value="View Report"/>
 </form>
 @{
     if (Model.ErrorMessage!=null)
@@ -20,7 +20,7 @@
 }
 
 @{
-    if (Model.submitted == true) // Only display report when submit button clicked
+    if (Model.Submitted == true) // Only display report when submit button clicked
     {
         <div class="table-container">
             <table class="table mb-0">
