@@ -59,7 +59,7 @@ namespace MusicLibrary.Pages.Report
             ReportItemList.Add(joinDate);
 
             // Get all artist names for selection box in front end
-            var Artist = from u in _db.User.FromSqlRaw($"SELECT * FROM [dbo].[User] WHERE isArtist=1 AND UserName = {inputArtistName}")
+            var Artist = from u in _db.User.FromSqlRaw("SELECT * FROM [dbo].[User] WHERE isArtist=1 AND UserName ={0}", inputArtistName)
                          select u;
             CurrentArtist = await Artist.ToListAsync();
 
