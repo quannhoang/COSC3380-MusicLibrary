@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MusicLibrary.Pages.Report
 {
-    public class IndexModel : PageModel
+    public class AlbumReportModel : PageModel
     {
 
         private readonly MusicLibraryContext _db; // Database object
 
-        public IndexModel(MusicLibraryContext context) //Database object init
+        public AlbumReportModel(MusicLibraryContext context) //Database object init
         {
             _db = context;
         }
