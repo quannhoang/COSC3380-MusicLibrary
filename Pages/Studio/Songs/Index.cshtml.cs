@@ -20,7 +20,6 @@ namespace MusicLibrary.Pages.Studio.Songs
         }
 
         public string loggedInUserName { get; set; } = String.Empty;
-        public Boolean liked { get; set; } = false;
         public IList<Song> Songs { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchString { get; set; }
@@ -54,12 +53,10 @@ namespace MusicLibrary.Pages.Studio.Songs
                 if (LikeSongList.Count() == 0)
                 {
                     _db.Database.ExecuteSqlRaw("Insert into [dbo].[Like] (UserName, SongID) values({0}, {1}) ", loggedInUserName, LikeSongID);
-                    liked = true;
                 }
                 else
                 {
                     _db.Database.ExecuteSqlRaw("DELETE FROM [dbo].[Like] WHERE UserName = {0} AND SongID = {1}", loggedInUserName, LikeSongID);
-                    liked = false;
                 }
 
             }

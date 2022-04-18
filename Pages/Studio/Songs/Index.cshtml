@@ -65,8 +65,8 @@
                     </td>
                     <td>
                         <div class="d-flex">
-                            <a asp-page="./Index" asp-route-LikeSongID="@item.SongID" class=@(Model.liked == true ? "LikeIcon liked" : "LikeIcon")>
-                                <svg version="1.1" class="hover-dark" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px" x="0px" y="0px"
+                            <a asp-page="./Index" asp-route-LikeSongID="@item.SongID" class=@(item.LikeCount > 0 ? "LikeIcon liked" : "LikeIcon")>
+                                <svg version="1.1" class="hover-dark" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="20px" x="0px" y="0px"
                                  viewBox="0 0 302.489 302.489" style="enable-background:new 0 0 302.489 302.489;" xml:space="preserve">
                                 <path d="M302.351,98.012c-1.116-20.846-9.942-40.422-24.855-55.122c-15.103-14.887-34.811-23.086-55.491-23.086
 	c-30.776,0-53.082,24.334-65.065,37.408c-1.85,2.019-4.018,4.384-5.527,5.827c-1.208-1.25-2.845-3.114-4.351-4.828

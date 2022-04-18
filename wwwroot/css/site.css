@@ -96,6 +96,7 @@ thead tr {
     top: 0;
     background: white;
     color: black;
+    z-index: 4;
 }
 
 svg {
@@ -162,6 +163,19 @@ svg {
     background: #1C1715;
     border-radius: .5rem;
 }
+
+.LikeIcon svg path {
+    fill: transparent;
+    stroke: #FFA869;
+    stroke-width: 2rem;
+}
+
+.LikeIcon.liked svg path {
+    fill: #FFA869;
+    stroke: none;
+    stroke-width: 0;
+}
+
 
 label{
     cursor: pointer;
