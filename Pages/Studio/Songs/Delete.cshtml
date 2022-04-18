@@ -8,8 +8,7 @@
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this song?</h3>
-<div>
-    <hr />
+<div class="styled-form other-form">
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Song.Name)
@@ -46,6 +45,6 @@
     <form method="post">
         <input type="hidden" asp-for="Song.SongID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index" class="text-dark">Back to List</a>
+        <a asp-page="./Index" class="text-white">Back to List</a>
     </form>
 </div>

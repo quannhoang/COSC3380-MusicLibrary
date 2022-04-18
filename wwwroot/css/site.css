@@ -69,6 +69,17 @@ h1 {
     font-weight: 600;
 }
 
+.invert-btn-primary {
+    background: #FFA869;
+    border: 0;
+    color: #1C1715;
+    font-weight: 600;
+}
+
+    .invert-btn-primary:hover {
+        background: #df966d;
+    }
+
     .btn-primary:hover, .btn-primary:hover svg {
         background: #494543;
         color: #FFA869;
@@ -162,6 +173,12 @@ svg {
 .styled-form {
     background: #1C1715;
     border-radius: .5rem;
+}
+
+.other-form {
+    color: #FFA869;
+    width: 350px;
+    padding: 1rem;
 }
 
 .LikeIcon svg path {

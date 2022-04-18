@@ -6,11 +6,9 @@
 }
 
 <h1>Edit Song</h1>
-
-<hr />
-<div class="row">
+<div class="row" style="color: #FFA869;">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" class="styled-form other-form d-flex flex-column gap-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Song.SongID" />
             <input type="hidden" asp-for="Song.FileName" />
@@ -40,7 +38,7 @@
                 <span asp-validation-for="Song.Length" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn invert-btn-primary" />
             </div>
         </form>
     </div>
