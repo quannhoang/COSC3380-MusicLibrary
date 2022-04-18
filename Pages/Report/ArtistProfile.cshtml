@@ -1,7 +1,9 @@
 ﻿@page
 @model MusicLibrary.Pages.Report.ArtistProfileModel
 @{
+   
 }
+
 
 <h1>Artist Profile Report</h1>
 
@@ -16,33 +18,116 @@
     </div>
 </form>
 
-<div style="width:30%;height:20%:align:right">
-<canvas id="pieChartCanvas" width="30" height="20"></canvas>
-</div>
+@{
+    if (Model.Submitted == true) // Only display report when submit button clicked
+    {
+        <div class="table-container">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th colspan="2">Profile report for artist: @Model.inputArtistName</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <th>
+                                Label
+                            </th>
+                            <th>
+                                Value
+                            </th>
+                        </tr>
+            
+                        @foreach (var item in Model.ReportItemList)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Label)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                        </tr>
+                        }
+
+                
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width:30%;height:20%; display:inline">
+        <canvas id="pieChartCanvas" width="30" height="20"></canvas>
+        </div>
+
+        <div style="width:40%;height:40% display:inline">
+        <canvas id="barChartCanvas" width="100" height="80"></canvas>
+        </div>
+
+
+    }
+}
+
 
 
 <script src="~/js/chart.min.js"></script>
 <script>
-
+const colors = ['rgba(255, 102, 102, 1)', 
+                'rgba(255, 178, 102, 1)', 
+                'rgba(102, 178, 255, 1)', 
+                'rgba(0, 204, 102, 1)', 
+                'rgba(205, 102, 255, 1)', 
+                'Orange', 
+                'Black', 
+                'Brown']
 const pie_ctx = document.getElementById('pieChartCanvas').getContext('2d');
 const pieChart = new Chart(pie_ctx, {
     type: 'doughnut',
     data:{
-      labels: [
-        'Red',
-        'Blue',
-        'Yellow'
-      ],
+      labels: [@{foreach (var item in Model.PieChartItems) {@Html.Raw("'" + item + "'" + ',')}}],
       datasets: [{
         label: 'My First Dataset',
-        data: [300, 50, 100],
-        backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
-        hoverOffset: 4
-      }]
+        data: [@{foreach (var item in Model.PieChartData) {@Html.Raw(item.ToString() + ',')}}],
+        backgroundColor: colors,
+        hoverOffset: 4,
+        weight:1
+      }],
+    },
+     options: {
+        plugins: {
+            title: {
+                display: true,
+                text: 'Artist Genre Profile'
+            }
+        }
+     }
+
+});
+
+const bar_ctx = document.getElementById('barChartCanvas').getContext('2d');
+const barChart = new Chart(bar_ctx, {
+    type: 'bar',
+    data: {
+        labels: [@{foreach (var item in Model.BarChartItems) @Html.Raw("'" + item + "'" + ',')}],
+        datasets: [{
+            label: 'Top viewed songs',
+            data: [@{foreach (var data in Model.BarChartData) @Html.Raw(data.ToString() + ',')}],
+            backgroundColor: [ @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(153, 0, 0, 0.6)',")}],
+            borderColor: [  @{foreach (var data in Model.BarChartData) @Html.Raw("'rgba(255, 99, 132, 1)',")}],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Top 5 viewed songs by this artis'
+            }
+        }
     }
 });
 </script>

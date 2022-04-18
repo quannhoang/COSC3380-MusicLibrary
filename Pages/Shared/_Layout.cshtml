@@ -43,7 +43,17 @@
                                         <a class="dropdown-item" asp-page="/Studio/Albums/Index">Your Albums</a>
                                     </div>
                                 </div>
-                                <a class="nav-link nav-item" asp-area="" asp-page="/Report/Index">Report</a>
+                                <div class="dropdown">
+                                    <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Report
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" asp-page="/Report/TrendReport">Trend Report</a>
+                                        <a class="dropdown-item" asp-page="/Report/ArtistProfile">Artist Profile</a>
+                                        <a class="dropdown-item" asp-page="/Report/Index">Albums Report</a>
+                                    </div>
+                                </div>
+
                                 if (User.HasClaim("Role", "Admin"))
                                 {
                                         <a class="nav-link nav-item" asp-area="" asp-page="/Account/Manage">Manage Users</a>
