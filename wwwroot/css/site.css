@@ -75,7 +75,7 @@ h1 {
     }
 
 .table-container {
-    padding: .5rem 0;
+    /*padding: .5rem 0;*/
     background: #1C1715;
     width: 100%;
     max-height: 325px;
@@ -90,6 +90,13 @@ h1 {
     background: #322E2C;
     color: #FFA869;
     border: 0;
+}
+
+thead tr {
+    position: sticky;
+    top: 0;
+    background: white;
+    color: black;
 }
 
 svg {

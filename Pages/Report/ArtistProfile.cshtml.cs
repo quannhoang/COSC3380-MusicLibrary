@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,6 +17,7 @@ namespace MusicLibrary.Pages.Report
         }
 
         public SelectList ArtistList { get; set; }
+        public IList<MusicLibrary.Models.User> CurrentArtist { get; set; }
 
         [BindProperty]
         public string inputArtistName { get; set; } = string.Empty;
@@ -29,9 +29,9 @@ namespace MusicLibrary.Pages.Report
         {
             // When loading the page, get all artist names for selection box in front end
             IQueryable<string> allArtist = from u in _db.User.FromSqlRaw("SELECT * FROM [dbo].[User] WHERE isArtist=1")
-                            orderby u.UserName
-                            select u.UserName;
-            ArtistList =  new SelectList(await allArtist.ToListAsync());
+                                           orderby u.UserName
+                                           select u.UserName;
+            ArtistList = new SelectList(await allArtist.ToListAsync());
             return Page();
         }
 
@@ -41,13 +41,11 @@ namespace MusicLibrary.Pages.Report
             if (inputArtistName == null) return await OnGetAsync();
 
             // Get all artist names for selection box in front end
-            IQueryable<string> allArtist = from u in _db.User.FromSqlRaw("SELECT * FROM [dbo].[User] WHERE isArtist=1")
-                                           orderby u.UserName
-                                           select u.UserName;
-            ArtistList = new SelectList(await allArtist.ToListAsync());
+            var Artist = from u in _db.User.FromSqlRaw($"SELECT * FROM [dbo].[User] WHERE isArtist=1 AND UserName = {inputArtistName}")
+                         select u;
+            CurrentArtist = await Artist.ToListAsync();
 
             //
-
             return Page();
         }
     }
