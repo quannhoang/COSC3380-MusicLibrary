@@ -16,7 +16,9 @@ namespace MusicLibrary.Pages.Report
             _db = context;
         }
 
-        public IList<Album> AllAlBums { get; set; }
+        public IList<Album> AllAlbums { get; set; }
+        public int AllAlbumsSize { get; set; } = 0;
+        public IList<Song> AllSongs { get; set; }
 
         public string fromDate { get; set; }
 
@@ -26,26 +28,26 @@ namespace MusicLibrary.Pages.Report
         {
             var allAlbumsFromDB = from a in _db.Album.FromSqlRaw("SELECT * FROM dbo.Album"
                                                                 + " WHERE CreateDate >= {0}"
-                                                                + " AND CreateDate <= {1}", fromDate, toDate) select a;
-            AllAlBums = await allAlbumsFromDB.ToListAsync();
-            //fromDate = "This is my date";
-        }   
-        public async Task OnPost(string? to, string? from) //On clicking submit a form
-        {
-            if (to != null && from !=null)
-            {
-
-                Console.WriteLine(from);
-                Console.WriteLine(to);
-                fromDate = from;
-                toDate = to;
-                var allAlbumsFromDB = from a in _db.Album.FromSqlRaw("SELECT * FROM dbo.Album"
-                                                                + " WHERE CreateDate >= {0}"
                                                                 + " AND CreateDate <= {1}", fromDate, toDate)
-                                      select a;
-                AllAlBums = await allAlbumsFromDB.ToListAsync();
-            }
-
+                                  select a;
+            AllAlbums = await allAlbumsFromDB.ToListAsync();
+            //fromDate = "This is my date";
+        }
+        public async Task OnPostAsync(string? to, string? from) //On clicking submit a form
+        {
+            fromDate = from;
+            toDate = to;
+            var allAlbumsFromDB = from a in _db.Album.FromSqlRaw("SELECT * FROM dbo.Album"
+                                                               + " WHERE CreateDate >= {0}"
+                                                               + " AND CreateDate <= {1}", fromDate, toDate)
+                                  select a;
+            var allSongsFromDB = from b in _db.Song.FromSqlRaw("SELECT * FROM dbo.Song"
+                                                   + " WHERE UploadDate >= {0}"
+                                                   + " AND UploadDate <= {1}", fromDate, toDate)
+                                 select b;
+            AllAlbums = await allAlbumsFromDB.ToListAsync();
+            AllAlbumsSize = AllAlbums.Count;
+            AllSongs = await allSongsFromDB.ToListAsync();
         }
     }
 }

@@ -3,20 +3,64 @@
 @{
 }
 
-<h1>Index Search</h1>
+<h1 style="font-size:45px;">Index Search</h1>
 
 <div>
     <b1>Displaying albums published between dates: </b1>
-    <input type="date"/> <b2> and </b2> <input type="date"/>
-</div>
-
-<div>
     <form method="post">
     <input type="date" name="from"/>
+    <b2> and </b2>
     <input type="date" name="to"/>
+    <b3>|</b3>
     <button type="submit" >Generate Results</button>
     </form>
 </div>
 
-@{//@Html.Raw(Model.AllAlBums[0].AlbumName)
+<div class="table-container">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllAlbums[0].AlbumName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllAlbums[0].CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllAlbums[0].ArtistName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AllAlbums[0].SongCount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AllAlbums)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AlbumName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ArtistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SongCount)
+                    </td>
+                </tr>
+                }
+            </tbody>
+    </table>
+</div>
+
+<div>
+<h6 style="font-size:26px;">Total Number of Albums released during this period: @Html.Raw(Model.AllAlbumsSize.ToString())</h6>
+</div>
+
+@{
+    //@Html.Raw(Model.AllAlBums[0].AlbumName)
 }

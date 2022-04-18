@@ -52,8 +52,8 @@ namespace MusicLibrary.Pages.Browse.Albums
                              select s;
 
             AlbumSongs = await albumSongs.Distinct().ToListAsync();
-
-            if (AlbumSongs.Count == 0)
+            if (AlbumSongs.Count == 0) return Page();
+            if ((songID == null) && (songIndex == null))
             {
                 CurrentSong = await _db.Song.FirstOrDefaultAsync(s => s.SongID == AlbumSongs[0].SongID);
 
