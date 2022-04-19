@@ -1,0 +1,63 @@
+﻿@page
+@model MusicLibrary.Pages.Browse.Songs.PlaySongModel
+
+@{
+    ViewData["Title"] = "PlaySong";
+}
+
+<h1>Song Player</h1>
+
+<div>
+    <div class="audio-player-card">
+        <audio controls
+               src=@(Model.songUri)>
+        </audio>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.UploadDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.UploadDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.Genre)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.Genre)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.Artist)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.Artist)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.Length)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.Length)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.LikeCount)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.LikeCount)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Song.ViewCount)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Song.ViewCount)
+            </dd>
+        </dl>
+    </div>
+</div>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
