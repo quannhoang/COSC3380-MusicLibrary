@@ -20,19 +20,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <div class="navbar-nav align-items-center w-100">
                         <a class="nav-link nav-item" asp-area="" asp-page="/Index">Home</a>
+                        <div class="dropdown">
+                            <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Browse
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" asp-page="/Browse/Songs/Index">Songs</a>
+                                <a class="dropdown-item" asp-page="/Browse/Playlists/Index">Playlists</a>
+                                <a class="dropdown-item" asp-page="/Browse/Albums/Index">Albums</a>
+                            </div>
+                        </div>
                         @{
                             if (User.Identity.IsAuthenticated)
                             {
-                                <div class="dropdown">
-                                    <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Browse
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-page="/Browse/Songs/Index">Songs</a>
-                                        <a class="dropdown-item" asp-page="/Browse/Playlists/Index">Playlists</a>
-                                        <a class="dropdown-item" asp-page="/Browse/Albums/Index">Albums</a>
-                                    </div>
-                                </div>
                                 <div class="dropdown">
                                     <a class="nav-link nav-item" asp-page="" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Studio
@@ -56,7 +56,7 @@
 
                                 if (User.HasClaim("Role", "Admin"))
                                 {
-                                        <a class="nav-link nav-item" asp-area="" asp-page="/Account/Manage">Manage Users</a>
+                                    <a class="nav-link nav-item" asp-area="" asp-page="/Account/Manage">Manage Users</a>
                                 }
                                 <div class="d-flex flex-column ms-md-auto gap-2 flex-sm-row text-center">
                                     <a class="nav-link nav-item" asp-area="" asp-page="/Studio/Index">User: <b>@User.Identity.Name</b></a><a class="nav-link nav-item" asp-area="" asp-page="/Account/Logout">Logout</a>

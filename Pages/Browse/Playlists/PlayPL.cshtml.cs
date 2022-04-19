@@ -1,18 +1,13 @@
 #nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Browse.Playlists
 {
-    [Authorize]
+    //[Authorize] Publicly accessible
     public class PlayPLModel : PageModel
     {
         private readonly MusicLibraryContext _db;

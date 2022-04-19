@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MusicLibrary.Pages.Browse.Songs
 {
-    [Authorize]
+    //[Authorize] Publicly accessible
     public class PlaySongModel : PageModel
     {
         private readonly MusicLibraryContext _db;
@@ -28,7 +27,7 @@ namespace MusicLibrary.Pages.Browse.Songs
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            string loggedInUserName = HttpContext.User.Identity.Name;  
+            string loggedInUserName = HttpContext.User.Identity.Name;
             if (id == null)
             {
                 return NotFound();

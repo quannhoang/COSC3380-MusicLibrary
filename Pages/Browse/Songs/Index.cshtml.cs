@@ -1,5 +1,4 @@
 #nullable disable
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,7 +8,7 @@ using MusicLibrary.Models;
 
 namespace MusicLibrary.Pages.Browse.Songs
 {
-    [Authorize]
+    //[Authorize] Publicly accessible
     public class IndexModel : PageModel
     {
         private readonly MusicLibraryContext _db;
@@ -47,7 +46,7 @@ namespace MusicLibrary.Pages.Browse.Songs
             }
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             Songs = await songs.ToListAsync();
-            
+
 
             foreach (var song in Songs)
             {
@@ -62,6 +61,8 @@ namespace MusicLibrary.Pages.Browse.Songs
                 }
             }
 
+            // NO LIKE FUNCTIONALITY ALLOWED FOR UNREGISTERD USERS
+            //[Authorize]
             if (LikeSongID != null)
             {
                 var LikeSong = from s in _db.Like.FromSqlRaw("SELECT * from [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", LikeSongID, loggedInUserName) select s;

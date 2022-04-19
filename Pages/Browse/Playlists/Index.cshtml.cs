@@ -1,5 +1,4 @@
 #nullable disable
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +7,7 @@ using MusicLibrary.Models;
 
 namespace MusicLibrary.Pages.Browse.Playlists
 {
-    [Authorize]
+    //[Authorize] Publicly accessible
     public class IndexModel : PageModel
     {
         private readonly MusicLibraryContext _db;
@@ -23,7 +22,7 @@ namespace MusicLibrary.Pages.Browse.Playlists
         public string searchString { get; set; }
 
         public async Task OnGet()
-        {   
+        {
             // Get all playlits from database
             var playlists = from pl in _db.Playlist select pl;
 
