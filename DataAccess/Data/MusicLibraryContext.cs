@@ -57,5 +57,7 @@ namespace MusicLibrary.DataAccess.Data
         public DbSet<PlaylistSongs> PlaylistSongs { get; set; }
         
         public DbSet<AlbumSongs> AlbumSongs { get; set; }
+
+        public DbSet<Email> EmailQueue { get; set; }
     }
 }
