@@ -1,4 +1,5 @@
 #nullable disable
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using MusicLibrary.DataAccess.Data;
 using MusicLibrary.Models;
 
-namespace MusicLibrary.Pages.Browse.Songs
+namespace MusicLibrary.Pages.Browse.AuthSongs
 {
-    //[Authorize] Publicly accessible
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly MusicLibraryContext _db;
@@ -48,36 +49,36 @@ namespace MusicLibrary.Pages.Browse.Songs
             Songs = await songs.ToListAsync();
 
 
-            //foreach (var song in Songs)
-            //{
-            //    var likeFromCurrentUser = _db.Like.FromSqlRaw("SELECT * FROM [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", song.SongID, loggedInUserName);
-            //    if (likeFromCurrentUser.Count() > 0)
-            //    {
-            //        LikeList.Add(1);
-            //    }
-            //    else
-            //    {
-            //        LikeList.Add(0);
-            //    }
-            //}
+            foreach (var song in Songs)
+            {
+                var likeFromCurrentUser = _db.Like.FromSqlRaw("SELECT * FROM [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", song.SongID, loggedInUserName);
+                if (likeFromCurrentUser.Count() > 0)
+                {
+                    LikeList.Add(1);
+                }
+                else
+                {
+                    LikeList.Add(0);
+                }
+            }
 
-            // NO LIKE FUNCTIONALITY ALLOWED FOR UNREGISTERED USERS
-            //if (LikeSongID != null)
-            //{
-            //    var LikeSong = from s in _db.Like.FromSqlRaw("SELECT * from [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", LikeSongID, loggedInUserName) select s;
-            //    IList<MusicLibrary.Models.Like> LikeSongList = await LikeSong.ToListAsync();
-            //    if (LikeSongList.Count() == 0)
-            //    {
-            //        _db.Database.ExecuteSqlRaw("Insert into [dbo].[Like] (UserName, SongID) values({0}, {1}) ", loggedInUserName, LikeSongID);
-            //        return RedirectToPage("./Index");
-            //    }
-            //    else
-            //    {
-            //        _db.Database.ExecuteSqlRaw("DELETE FROM [dbo].[Like] WHERE UserName = {0} AND SongID = {1}", loggedInUserName, LikeSongID);
-            //        return RedirectToPage("./Index");
-            //    }
+            // NO LIKE FUNCTIONALITY ALLOWED FOR UNREGISTERD USERS
+            if (LikeSongID != null)
+            {
+                var LikeSong = from s in _db.Like.FromSqlRaw("SELECT * from [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", LikeSongID, loggedInUserName) select s;
+                IList<MusicLibrary.Models.Like> LikeSongList = await LikeSong.ToListAsync();
+                if (LikeSongList.Count() == 0)
+                {
+                    _db.Database.ExecuteSqlRaw("Insert into [dbo].[Like] (UserName, SongID) values({0}, {1}) ", loggedInUserName, LikeSongID);
+                    return RedirectToPage("./Index");
+                }
+                else
+                {
+                    _db.Database.ExecuteSqlRaw("DELETE FROM [dbo].[Like] WHERE UserName = {0} AND SongID = {1}", loggedInUserName, LikeSongID);
+                    return RedirectToPage("./Index");
+                }
 
-            //}
+            }
             return Page();
         }
     }
