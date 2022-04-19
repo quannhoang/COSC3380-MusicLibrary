@@ -54,7 +54,10 @@ namespace MusicLibrary.Pages.Account
             {
                 CurrentUser.IsSuspended = true;
                 await _db.SaveChangesAsync();
+                _db.Database.ExecuteSqlRaw("INSERT INTO [dbo].[SuspendHistory] (UserName, Email, SuspendDate)" +
+                                " values({0}, {1}, getdate())", CurrentUser.UserName, CurrentUser.Email);
             }
+            
           
 
             return RedirectToPage("./Manage");
