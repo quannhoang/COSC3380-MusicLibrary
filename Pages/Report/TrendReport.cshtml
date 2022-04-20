@@ -7,8 +7,8 @@
 <h1>Trending Report</h1>
 <span>Please choose a date range for report</span>
 <form method="post">
-    <input type="date" name="from"/>
-    <input type="date" name="to"/>
+    <input type="date" asp-for="fromDate" name="from"/>
+    <input type="date" asp-for="toDate" name="to"/>
     <input type="submit" class="input-bg px-2" value="View Report"/>
 </form>
 @{
@@ -26,7 +26,7 @@
             <table class="table mb-0">
                 <thead>
                     <tr style="background: white;">
-                        <th colspan="2">Trending report for date range: @Model.frontFrom - @Model.frontTo</th>
+                        <th colspan="2">Trending report for date range: @Model.fromDate - @Model.toDate</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,19 +87,24 @@ const barChart = new Chart(bar_ctx, {
             borderWidth: 0
         }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Song upload trend'
+                text: 'Song upload trend',
+                font: {
+                        size: 20
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
             }
         }
-    }
+     }
 });
 
 const line_ctx = document.getElementById('lineChartCanvas').getContext('2d');
@@ -116,19 +121,24 @@ const lineChart = new Chart(line_ctx, {
             radius:4
         }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Views over time'
+                text: 'Song views over time',
+                font: {
+                        size: 20
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
             }
         }
-    }
+     }
 });
 </script>
  

@@ -78,7 +78,7 @@ namespace MusicLibrary.Pages.Studio.Albums
             if (songID != null)
             {
                 currentSongIndex = findSongIndex(AlbumSongs, songID);
-                return Redirect(String.Format("./Play?songIndex={0}&playlistID={1}", currentSongIndex, albumID));
+                return Redirect(String.Format("./PlayAlbum?songIndex={0}&albumID={1}", currentSongIndex, albumID));
             }
 
             // If user choose Next, Or Previous, play based on songIndex

@@ -28,7 +28,6 @@ namespace MusicLibrary.Pages.Browse.Songs
         [BindProperty(SupportsGet = true)]
         public string searchGenre { get; set; }
 
-        public IList<int> LikeList { get; set; } = new List<int>(new int[] { });
         public async Task<IActionResult> OnGetAsync(int? LikeSongID)
         {
             loggedInUserName = HttpContext.User.Identity.Name;

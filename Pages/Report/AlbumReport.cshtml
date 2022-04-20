@@ -8,9 +8,9 @@
 <div>
     <b1>Displaying albums published between dates: </b1>
     <form method="post">
-    <input type="date" name="from"/>
+    <input type="date" asp-for="fromDate" name="from"/>
     <b2> and </b2>
-    <input type="date" name="to"/>
+    <input type="date" asp-for="toDate" name="to"/>
     <b3>|</b3>
     <button type="submit" class="input-bg px-2">View Report</button>
     </form>
@@ -124,19 +124,24 @@ const barChart = new Chart(bar_ctx, {
             borderWidth: 0
         }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Album create trend'
+                text: 'Number of Albums over time',
+                font: {
+                        size: 20
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
             }
         }
-    }
+     }
 });
 
 

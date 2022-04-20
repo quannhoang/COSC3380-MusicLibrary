@@ -19,9 +19,9 @@ namespace MusicLibrary.Pages.Report
 
         public bool Submitted { get; set; } = false;
 
-        public string frontFrom { get; set; } = string.Empty;
+        public string fromDate { get; set; } = string.Empty;
 
-        public string frontTo { get; set; } = string.Empty;
+        public string toDate { get; set; } = string.Empty;
 
         public IList<ReportItem> ReportItemList { get; set; } = new List<ReportItem>(new ReportItem[] { });
 
@@ -58,8 +58,8 @@ namespace MusicLibrary.Pages.Report
             }
 
             // Assign frontFrom and frontTo for front end to display
-            frontFrom = from;
-            frontTo = to;
+            fromDate = from;
+            toDate = to;
 
             // Toggle submitted for front end to display results
             Submitted = true;

@@ -27,6 +27,7 @@ namespace MusicLibrary.Pages.Studio.Songs
         //public List<string> Genres { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchGenre { get; set; }
+        public IList<int> LikeList { get; set; } = new List<int>(new int[] { });
         public async Task<IActionResult> OnGetAsync(int? LikeSongID)
         {
             loggedInUserName = HttpContext.User.Identity.Name;
@@ -45,6 +46,19 @@ namespace MusicLibrary.Pages.Studio.Songs
             }
             Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             Songs = await songs.ToListAsync();
+
+            foreach (var song in Songs)
+            {
+                var likeFromCurrentUser = _db.Like.FromSqlRaw("SELECT * FROM [dbo].[Like] WHERE SongID = {0} AND UserName = {1}", song.SongID, loggedInUserName);
+                if (likeFromCurrentUser.Count() > 0)
+                {
+                    LikeList.Add(1);
+                }
+                else
+                {
+                    LikeList.Add(0);
+                }
+            }
 
             if (LikeSongID != null)
             {

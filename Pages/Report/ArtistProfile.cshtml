@@ -96,12 +96,23 @@ const pieChart = new Chart(pie_ctx, {
         plugins: {
             title: {
                 display: true,
-                text: 'Artist Genre Profile'
+                text: 'Artist Genre Profile',
+                font: {
+                        size: 20
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
             }
         }
      }
 
 });
+
 
 const bar_ctx = document.getElementById('barChartCanvas').getContext('2d');
 const barChart = new Chart(bar_ctx, {
@@ -116,18 +127,23 @@ const barChart = new Chart(bar_ctx, {
             borderWidth: 0
         }]
     },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Top 5 viewed songs by this artis'
+                text: 'Top 5 viewed songs by this artist',
+                font: {
+                        size: 20
+                }
+            },
+            legend: {
+                labels: {
+                    font: {
+                        size: 14
+                    }
+                }
             }
         }
-    }
+     }
 });
 </script>
