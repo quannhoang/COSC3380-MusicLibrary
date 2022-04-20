@@ -12,6 +12,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Song.SongID" />
             <input type="hidden" asp-for="Song.FileName" />
+            <input type="hidden" asp-for="Song.ViewCount" />
+            <input type="hidden" asp-for="Song.LikeCount" />
             <div class="form-group">
                 <label asp-for="Song.Name" class="control-label"></label>
                 <input asp-for="Song.Name" class="form-control" />

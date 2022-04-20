@@ -92,7 +92,7 @@ namespace MusicLibrary.Pages.Account
                     SmtpClient smtp = new SmtpClient();
                     smtp.Host = "smtp.gmail.com";
                     smtp.EnableSsl = true;
-                    NetworkCredential NetworkCredential = new NetworkCredential(from, "Cosc3380@");
+                    NetworkCredential NetworkCredential = new NetworkCredential(from, "Cosc3380@"); // FIXME: put this passwords into Environment Variable
                     smtp.UseDefaultCredentials = false;
                     smtp.Credentials = NetworkCredential;
                     smtp.Port = 587;
