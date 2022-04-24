@@ -31,7 +31,7 @@ namespace MusicLibrary.Pages.Studio.Songs
 
         public List<string> allowedFiles { get; set; } = new List<string> {".m4a", ".mp3", ".flac", ".mp4", ".wav", ".wma", ".aac" };
 
-        public string fileNotAllowedMessage { get; set; } = string.Empty;
+        public string errorMessage { get; set; } = string.Empty;
 
         public IActionResult OnGet()
         {
@@ -53,10 +53,15 @@ namespace MusicLibrary.Pages.Studio.Songs
             // Only allow files ".m4a, .mp3, .flac, .mp4, .wav, .wma, .aac"
             if (!allowedFiles.Contains(Path.GetExtension(inputFile.FileName)))
             {
-                fileNotAllowedMessage = "Only files M4A, MP3, MP4, FLAC, WAV, WMA and AAC are allowed";
+                errorMessage = "Only files M4A, MP3, MP4, FLAC, WAV, WMA and AAC are allowed";
                 return Page();
             }
-
+            // Only allow file less than 30mb in size
+            if (inputFile.Length > 30485760)
+            {
+                errorMessage = "File size is too large. Upper limit is 30mb";
+                return Page();
+            }
             // Generate new file name
             var fileName = Guid.NewGuid() + Path.GetExtension(inputFile.FileName); 
 

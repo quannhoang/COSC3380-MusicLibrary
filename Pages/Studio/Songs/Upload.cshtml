@@ -19,13 +19,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Song.FileName" class="control-label text-white"></label>
-                <input type="file" asp-for="inputFile" accept=".m4a, .mp3, .flac, .mp4, .wav, .wma, .aac" id="inputFile" name="inputFile" class="form-control" />
+                <input type="file" asp-for="inputFile" id="inputFile" onchange="validateSize(this)" accept=".m4a, .mp3, .flac, .mp4, .wav, .wma, .aac" id="inputFile" name="inputFile" class="form-control" />
                 <span asp-validation-for="Song.FileName" class="text-danger"></span>
                 <div class="text-danger">
                     @{
-                        if (Model.fileNotAllowedMessage!=null)
+                        if (Model.errorMessage!=null)
                         {
-                            @Html.Raw(Model.fileNotAllowedMessage);
+                            @Html.Raw(Model.errorMessage);
                         }
                         else @Html.Raw("");
                     }
@@ -48,6 +48,17 @@
         <img class="invert-icon" src="~/images/icons8-back-arrow-64.png" width="40px" height="40px"/>
     </a>
 </div>
+<script>
+function validateSize(input) {
+  const fileSize = input.files[0].size / 1024 / 1024; // in MB
+  if (fileSize > 30) {
+    alert('File is too large, upper limit is 30 MB');
+    document.getElementById('inputFile').value = '';
+  } else {
+    // Proceed further
+  }
+}
+</script>
 
 @section Scripts {
     @{
